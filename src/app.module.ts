@@ -1,10 +1,23 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { RolesModule } from './modules/roles/roles.module';
+import { SequelizeModule } from '@nestjs/sequelize';
+import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
-  imports: [],
+  imports: [
+    SequelizeModule.forRoot(SequelizeConfig),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      playground: true,
+      autoSchemaFile: 'schema.gql',
+    }),
+    RolesModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
