@@ -7,6 +7,14 @@ type Roles {
   name: String!
 }
 
+type Accounts {
+  id: ID!
+  email: String!
+  password: String!
+  status: String!
+}
+
 type Query {
   roles: [Roles!]!
+  accounts: [Accounts!]!
 }

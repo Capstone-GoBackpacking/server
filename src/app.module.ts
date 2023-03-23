@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { RolesModule } from './modules/roles/roles.module';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { AccountsModule } from './modules/accounts/accounts.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -15,7 +16,8 @@ import SequelizeConfig from './configs/sequelize.config';
       playground: true,
       autoSchemaFile: 'schema.gql',
     }),
-    RolesModule
+    RolesModule,
+    AccountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
