@@ -6,9 +6,14 @@ import {
   PrimaryKey,
   DataType,
   Unique,
-  AllowNull
+  AllowNull,
+  BelongsTo,
+  ForeignKey,
+  BeforeCreate
 } from 'sequelize-typescript';
 import { EAccountStatus } from '../types';
+import Roles from 'modules/roles/entities/role.entity';
+import * as bcrypt from 'bcrypt';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -42,4 +47,21 @@ export default class Accounts extends Model {
     defaultValue: EAccountStatus.enable
   })
   status: EAccountStatus
+
+  @Field()
+  @ForeignKey(() => Roles)
+  @AllowNull(false)
+  @Column
+  roleId: string;
+
+  @Field(() => Roles)
+  @BelongsTo(() => Roles)
+  role: Roles;
+
+  @BeforeCreate
+  static async hashPassword(instance: Accounts) {
+    const salt = await bcrypt.genSalt(10)
+    const hash = await bcrypt.hash(instance.password, salt)
+    instance.password = hash
+  }
 }
