@@ -1,7 +1,9 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import Profiles from 'profiles/entities/profile.entity';
 import {
   Column,
   DataType,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -25,4 +27,8 @@ export default class Genders extends Model {
     type: DataType.STRING(10),
   })
   name: string;
+
+  @Field(() => [Profiles])
+  @HasMany(() => Profiles)
+  profiles: Profiles[];
 }

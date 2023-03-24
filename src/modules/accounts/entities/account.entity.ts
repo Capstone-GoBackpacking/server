@@ -9,11 +9,13 @@ import {
   AllowNull,
   BelongsTo,
   ForeignKey,
-  BeforeCreate
+  BeforeCreate,
+  HasOne
 } from 'sequelize-typescript';
 import { EAccountStatus } from '../types';
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
+import Profiles from 'profiles/entities/profile.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -57,6 +59,10 @@ export default class Accounts extends Model {
   @Field(() => Roles)
   @BelongsTo(() => Roles)
   role: Roles;
+
+  @Field(() => Profiles)
+  @HasOne(() => Profiles)
+  profile: Profiles;
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {
