@@ -10,12 +10,15 @@ import {
   BelongsTo,
   ForeignKey,
   BeforeCreate,
-  HasOne
+  HasOne,
+  BelongsToMany
 } from 'sequelize-typescript';
 import { EAccountStatus } from '../types';
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
 import Profiles from 'modules/profiles/entities/profile.entity';
+import Hobbies from 'modules/hobbies/entities/hobby.entity';
+import AccountHobby from 'modules/account-hobby/entities/account-hobby.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -63,6 +66,10 @@ export default class Accounts extends Model {
   @Field(() => Profiles)
   @HasOne(() => Profiles)
   profile: Profiles;
+
+  @Field(() => [Hobbies])
+  @BelongsToMany(() => Hobbies, () => AccountHobby)
+  hobbies: Hobbies[];
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {

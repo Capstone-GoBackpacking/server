@@ -21,6 +21,18 @@ type Profiles {
   gender: Genders!
 }
 
+type AccountHobby {
+  id: String!
+  accountId: String!
+  hobbyId: String!
+}
+
+type Hobbies {
+  id: ID!
+  name: String!
+  account: [Accounts!]!
+}
+
 type Accounts {
   id: ID!
   email: String!
@@ -29,6 +41,7 @@ type Accounts {
   roleId: String!
   role: Roles!
   profile: Profiles!
+  hobbies: [Hobbies!]!
 }
 
 type Roles {
@@ -42,4 +55,6 @@ type Query {
   accounts: [Accounts!]!
   genders: [Genders!]!
   profiles: [Profiles!]!
+  hobbies: [Hobbies!]!
+  accountHobbies: [AccountHobby!]!
 }

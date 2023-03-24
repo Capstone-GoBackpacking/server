@@ -8,6 +8,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { GendersModule } from './modules/genders/genders.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
+import { HobbiesModule } from './modules/hobbies/hobbies.module';
+import { AccountHobbyModule } from './modules/account-hobby/account-hobby.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -22,6 +24,8 @@ import SequelizeConfig from './configs/sequelize.config';
     AccountsModule,
     GendersModule,
     ProfilesModule,
+    HobbiesModule,
+    AccountHobbyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
