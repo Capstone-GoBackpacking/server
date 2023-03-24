@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { RolesModule } from './modules/roles/roles.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AccountsModule } from './modules/accounts/accounts.module';
+import { GendersModule } from './modules/genders/genders.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -18,6 +19,7 @@ import SequelizeConfig from './configs/sequelize.config';
     }),
     RolesModule,
     AccountsModule,
+    GendersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
