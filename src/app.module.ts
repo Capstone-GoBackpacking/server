@@ -7,7 +7,7 @@ import { RolesModule } from './modules/roles/roles.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { GendersModule } from './modules/genders/genders.module';
-import { ProfilesModule } from './profiles/profiles.module';
+import { ProfilesModule } from './modules/profiles/profiles.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({

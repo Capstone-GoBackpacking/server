@@ -2,9 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Roles {
+type Genders {
   id: ID!
   name: String!
+  profiles: [Profiles!]!
+}
+
+type Profiles {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  birthday: String!
+  address: String!
+  accountId: String!
+  account: Accounts!
+  genderId: String!
+  gender: Genders!
 }
 
 type Accounts {
@@ -12,9 +26,20 @@ type Accounts {
   email: String!
   password: String!
   status: String!
+  roleId: String!
+  role: Roles!
+  profile: Profiles!
+}
+
+type Roles {
+  id: ID!
+  name: String!
+  accounts: [Accounts!]!
 }
 
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
+  genders: [Genders!]!
+  profiles: [Profiles!]!
 }

@@ -15,7 +15,7 @@ import {
 import { EAccountStatus } from '../types';
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
-import Profiles from 'profiles/entities/profile.entity';
+import Profiles from 'modules/profiles/entities/profile.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
