@@ -13,8 +13,8 @@ type Profiles {
   firstName: String!
   lastName: String!
   fullName: String!
-  birthday: String!
-  address: String!
+  birthday: String
+  address: String
   accountId: String!
   account: Accounts!
   genderId: String!
@@ -50,6 +50,16 @@ type Roles {
   accounts: [Accounts!]!
 }
 
+type Locations {
+  id: ID!
+  name: String!
+  address: String!
+  description: String
+  status: String!
+  lng: String!
+  lat: String!
+}
+
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
@@ -57,4 +67,5 @@ type Query {
   profiles: [Profiles!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
+  locations: [Locations!]!
 }

@@ -13,7 +13,7 @@ import {
   HasOne,
   BelongsToMany
 } from 'sequelize-typescript';
-import { EAccountStatus } from '../types';
+import { EStatus } from 'types/types'
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
 import Profiles from 'modules/profiles/entities/profile.entity';
@@ -48,10 +48,10 @@ export default class Accounts extends Model {
 
   @Field()
   @Column({
-    type: DataType.ENUM(...Object.values(EAccountStatus)),
-    defaultValue: EAccountStatus.enable
+    type: DataType.ENUM(...Object.values(EStatus)),
+    defaultValue: EStatus.enable
   })
-  status: EAccountStatus
+  status: EStatus;
 
   @Field()
   @ForeignKey(() => Roles)

@@ -10,6 +10,7 @@ import { GendersModule } from './modules/genders/genders.module';
 import { ProfilesModule } from './modules/profiles/profiles.module';
 import { HobbiesModule } from './modules/hobbies/hobbies.module';
 import { AccountHobbyModule } from './modules/account-hobby/account-hobby.module';
+import { LocationsModule } from './modules/locations/locations.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -26,6 +27,7 @@ import SequelizeConfig from './configs/sequelize.config';
     ProfilesModule,
     HobbiesModule,
     AccountHobbyModule,
+    LocationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

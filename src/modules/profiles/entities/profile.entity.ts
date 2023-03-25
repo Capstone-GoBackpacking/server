@@ -44,14 +44,14 @@ export default class Profiles extends Model {
   })
   fullName: string;
 
-  @Field()
+  @Field({ nullable: true })
   @AllowNull(true)
   @Column({
     type: DataType.DATEONLY
   })
   birthday?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @AllowNull(true)
   @Column({
     type: DataType.STRING(100)
