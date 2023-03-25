@@ -1,11 +1,14 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import LocationTag from 'modules/location-tag/entities/location-tag.entity';
+import Locations from 'modules/locations/entities/location.entity';
 import {
   Table,
   Model,
   PrimaryKey,
   Column,
   Unique,
-  DataType
+  DataType,
+  BelongsToMany
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -25,4 +28,8 @@ export default class Tags extends Model {
     type: DataType.STRING(20)
   })
   name: string;
+
+  @Field(() => [Locations])
+  @BelongsToMany(() => Locations, () => LocationTag)
+  locations: Locations[];
 }

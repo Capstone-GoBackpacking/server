@@ -12,6 +12,7 @@ import { HobbiesModule } from './modules/hobbies/hobbies.module';
 import { AccountHobbyModule } from './modules/account-hobby/account-hobby.module';
 import { LocationsModule } from './modules/locations/locations.module';
 import { TagsModule } from './modules/tags/tags.module';
+import { LocationTagModule } from './modules/location-tag/location-tag.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -30,6 +31,7 @@ import SequelizeConfig from './configs/sequelize.config';
     AccountHobbyModule,
     LocationsModule,
     TagsModule,
+    LocationTagModule,
   ],
   controllers: [AppController],
   providers: [AppService],

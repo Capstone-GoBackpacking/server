@@ -50,6 +50,18 @@ type Roles {
   accounts: [Accounts!]!
 }
 
+type Tags {
+  id: ID!
+  name: String!
+  locations: [Locations!]!
+}
+
+type LocationTag {
+  id: ID!
+  locationId: String!
+  tagId: String!
+}
+
 type Locations {
   id: ID!
   name: String!
@@ -58,6 +70,7 @@ type Locations {
   status: String!
   lng: String!
   lat: String!
+  tags: [Tags!]!
 }
 
 type Query {
@@ -68,4 +81,6 @@ type Query {
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
   locations: [Locations!]!
+  tags: [Tags!]!
+  locationTags: [LocationTag!]!
 }
