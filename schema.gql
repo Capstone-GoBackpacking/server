@@ -73,6 +73,33 @@ type Locations {
   tags: [Tags!]!
 }
 
+type Types {
+  id: ID!
+  name: String!
+  trips: [Trips!]!
+}
+
+type Trips {
+  id: ID!
+  name: String!
+  description: String
+  numberMembers: Int!
+  timeEnd: String!
+  timeStart: String!
+  meetingLng: String!
+  meetingLat: String!
+  slot: Int!
+  joined: Int!
+  locationStartId: String!
+  locationStart: Locations!
+  locationEndId: String!
+  locationEnd: Locations!
+  hostId: String!
+  host: Accounts!
+  typeId: String!
+  type: Types!
+}
+
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
@@ -83,4 +110,6 @@ type Query {
   locations: [Locations!]!
   tags: [Tags!]!
   locationTags: [LocationTag!]!
+  trips: [Trips!]!
+  types: [Types!]!
 }
