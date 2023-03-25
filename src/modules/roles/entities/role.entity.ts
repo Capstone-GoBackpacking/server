@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import Accounts from 'modules/accounts/entities/account.entity';
 import {
   Table,
   Column,
@@ -6,7 +7,8 @@ import {
   DataType,
   AllowNull,
   Unique,
-  Model
+  Model,
+  HasMany
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -27,4 +29,8 @@ export default class Roles extends Model {
     type: DataType.STRING(20)
   })
   name: string;
+
+  @Field(() => [Accounts])
+  @HasMany(() => Accounts)
+  accounts: Accounts[];
 }

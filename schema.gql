@@ -2,9 +2,35 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Roles {
+type Genders {
   id: ID!
   name: String!
+  profiles: [Profiles!]!
+}
+
+type Profiles {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+  birthday: String
+  address: String
+  accountId: String!
+  account: Accounts!
+  genderId: String!
+  gender: Genders!
+}
+
+type AccountHobby {
+  id: String!
+  accountId: String!
+  hobbyId: String!
+}
+
+type Hobbies {
+  id: ID!
+  name: String!
+  account: [Accounts!]!
 }
 
 type Accounts {
@@ -12,9 +38,78 @@ type Accounts {
   email: String!
   password: String!
   status: String!
+  roleId: String!
+  role: Roles!
+  profile: Profiles!
+  hobbies: [Hobbies!]!
+}
+
+type Roles {
+  id: ID!
+  name: String!
+  accounts: [Accounts!]!
+}
+
+type Tags {
+  id: ID!
+  name: String!
+  locations: [Locations!]!
+}
+
+type LocationTag {
+  id: ID!
+  locationId: String!
+  tagId: String!
+}
+
+type Locations {
+  id: ID!
+  name: String!
+  address: String!
+  description: String
+  status: String!
+  lng: String!
+  lat: String!
+  tags: [Tags!]!
+}
+
+type Types {
+  id: ID!
+  name: String!
+  trips: [Trips!]!
+}
+
+type Trips {
+  id: ID!
+  name: String!
+  description: String
+  numberMembers: Int!
+  timeEnd: String!
+  timeStart: String!
+  meetingLng: String!
+  meetingLat: String!
+  slot: Int!
+  joined: Int!
+  locationStartId: String!
+  locationStart: Locations!
+  locationEndId: String!
+  locationEnd: Locations!
+  hostId: String!
+  host: Accounts!
+  typeId: String!
+  type: Types!
 }
 
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
+  genders: [Genders!]!
+  profiles: [Profiles!]!
+  hobbies: [Hobbies!]!
+  accountHobbies: [AccountHobby!]!
+  locations: [Locations!]!
+  tags: [Tags!]!
+  locationTags: [LocationTag!]!
+  trips: [Trips!]!
+  types: [Types!]!
 }
