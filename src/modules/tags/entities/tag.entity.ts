@@ -1,6 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import LocationTag from 'modules/location-tag/entities/location-tag.entity';
 import Locations from 'modules/locations/entities/location.entity';
+import PostTag from 'modules/post-tag/entities/post-tag.entity';
+import Posts from 'modules/posts/entities/post.entity';
 import {
   Table,
   Model,
@@ -32,4 +34,8 @@ export default class Tags extends Model {
   @Field(() => [Locations])
   @BelongsToMany(() => Locations, () => LocationTag)
   locations: Locations[];
+
+  @Field(() => [Posts])
+  @BelongsToMany(() => Posts, () => PostTag)
+  posts: Posts[];
 }
