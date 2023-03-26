@@ -118,6 +118,12 @@ type Roles {
   accounts: [Accounts!]!
 }
 
+type PostTag {
+  id: ID!
+  tagId: String!
+  postId: String!
+}
+
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
@@ -132,4 +138,5 @@ type Query {
   types: [Types!]!
   requestJoinTrips: [RequestJoinTrip!]!
   posts: [Posts!]!
+  postTags: [PostTag!]!
 }
