@@ -90,6 +90,15 @@ type Trips {
   joinedMember: [Accounts!]!
 }
 
+type Posts {
+  id: ID!
+  title: String!
+  content: String
+  time: String!
+  authorId: String!
+  author: Accounts!
+}
+
 type Accounts {
   id: ID!
   email: String!
@@ -100,6 +109,7 @@ type Accounts {
   profile: Profiles!
   hobbies: [Hobbies!]!
   joinedTrips: [Trips!]!
+  posts: [Posts!]!
 }
 
 type Roles {
@@ -121,4 +131,5 @@ type Query {
   trips: [Trips!]!
   types: [Types!]!
   requestJoinTrips: [RequestJoinTrip!]!
+  posts: [Posts!]!
 }

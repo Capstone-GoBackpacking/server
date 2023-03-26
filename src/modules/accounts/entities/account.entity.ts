@@ -11,7 +11,8 @@ import {
   ForeignKey,
   BeforeCreate,
   HasOne,
-  BelongsToMany
+  BelongsToMany,
+  HasMany
 } from 'sequelize-typescript';
 import { EStatus } from 'types/types'
 import Roles from 'modules/roles/entities/role.entity';
@@ -21,6 +22,7 @@ import Hobbies from 'modules/hobbies/entities/hobby.entity';
 import AccountHobby from 'modules/account-hobby/entities/account-hobby.entity';
 import Trips from 'modules/trips/entities/trip.entity';
 import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
+import Posts from 'modules/posts/entities/post.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -76,6 +78,10 @@ export default class Accounts extends Model {
   @Field(() => [Trips])
   @BelongsToMany(() => Trips, () => RequestJoinTrip)
   joinedTrips: Trips[];
+
+  @Field(() => [Posts])
+  @HasMany(() => Posts)
+  posts: Posts[];
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {
