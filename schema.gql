@@ -33,23 +33,6 @@ type Hobbies {
   account: [Accounts!]!
 }
 
-type Accounts {
-  id: ID!
-  email: String!
-  password: String!
-  status: String!
-  roleId: String!
-  role: Roles!
-  profile: Profiles!
-  hobbies: [Hobbies!]!
-}
-
-type Roles {
-  id: ID!
-  name: String!
-  accounts: [Accounts!]!
-}
-
 type Tags {
   id: ID!
   name: String!
@@ -71,6 +54,12 @@ type Locations {
   lng: String!
   lat: String!
   tags: [Tags!]!
+}
+
+type RequestJoinTrip {
+  id: ID!
+  tripId: String!
+  memberId: String!
 }
 
 type Types {
@@ -98,6 +87,25 @@ type Trips {
   host: Accounts!
   typeId: String!
   type: Types!
+  joinedMember: [Accounts!]!
+}
+
+type Accounts {
+  id: ID!
+  email: String!
+  password: String!
+  status: String!
+  roleId: String!
+  role: Roles!
+  profile: Profiles!
+  hobbies: [Hobbies!]!
+  joinedTrips: [Trips!]!
+}
+
+type Roles {
+  id: ID!
+  name: String!
+  accounts: [Accounts!]!
 }
 
 type Query {
@@ -112,4 +120,5 @@ type Query {
   locationTags: [LocationTag!]!
   trips: [Trips!]!
   types: [Types!]!
+  requestJoinTrips: [RequestJoinTrip!]!
 }

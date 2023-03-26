@@ -19,6 +19,8 @@ import * as bcrypt from 'bcrypt';
 import Profiles from 'modules/profiles/entities/profile.entity';
 import Hobbies from 'modules/hobbies/entities/hobby.entity';
 import AccountHobby from 'modules/account-hobby/entities/account-hobby.entity';
+import Trips from 'modules/trips/entities/trip.entity';
+import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -70,6 +72,10 @@ export default class Accounts extends Model {
   @Field(() => [Hobbies])
   @BelongsToMany(() => Hobbies, () => AccountHobby)
   hobbies: Hobbies[];
+
+  @Field(() => [Trips])
+  @BelongsToMany(() => Trips, () => RequestJoinTrip)
+  joinedTrips: Trips[];
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {

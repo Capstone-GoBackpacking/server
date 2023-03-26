@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
+import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
 import Types from 'modules/types/entities/type.entity';
 import {
   Table,
@@ -10,7 +11,8 @@ import {
   AllowNull,
   ForeignKey,
   BelongsTo,
-  DataType
+  DataType,
+  BelongsToMany
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -122,4 +124,8 @@ export default class Trips extends Model {
   @Field(() => Types)
   @BelongsTo(() => Types)
   type: Types;
+
+  @Field(() => [Accounts])
+  @BelongsToMany(() => Accounts, () => RequestJoinTrip)
+  joinedMember: Accounts[];
 }

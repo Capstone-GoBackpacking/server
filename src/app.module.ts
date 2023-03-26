@@ -15,6 +15,7 @@ import { TagsModule } from './modules/tags/tags.module';
 import { LocationTagModule } from './modules/location-tag/location-tag.module';
 import { TripsModule } from './modules/trips/trips.module';
 import { TypesModule } from './modules/types/types.module';
+import { RequestJoinTripModule } from './modules/request-join-trip/request-join-trip.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -36,6 +37,7 @@ import SequelizeConfig from './configs/sequelize.config';
     LocationTagModule,
     TripsModule,
     TypesModule,
+    RequestJoinTripModule,
   ],
   controllers: [AppController],
   providers: [AppService],
