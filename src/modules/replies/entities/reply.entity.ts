@@ -1,8 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Comments from 'modules/comments/entities/comment.entity';
-import PostTag from 'modules/post-tag/entities/post-tag.entity';
-import Tags from 'modules/tags/entities/tag.entity';
 import {
   Table,
   Model,
@@ -11,14 +9,12 @@ import {
   ForeignKey,
   DataType,
   AllowNull,
-  BelongsTo,
-  BelongsToMany,
-  HasMany
+  BelongsTo
 } from 'sequelize-typescript';
 
 @ObjectType()
-@Table({ tableName: 'Posts', timestamps: false })
-export default class Posts extends Model {
+@Table({ tableName: 'Replies', timestamps: false })
+export default class Replies extends Model {
   @Field(() => ID)
   @PrimaryKey
   @Column({
@@ -30,16 +26,9 @@ export default class Posts extends Model {
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(30)
-  })
-  title: string;
-
-  @Field({ nullable: true })
-  @AllowNull(true)
-  @Column({
     type: DataType.STRING(500)
   })
-  content?: string;
+  content: string;
 
   @Field()
   @AllowNull(false)
@@ -50,7 +39,6 @@ export default class Posts extends Model {
   time: string;
 
   @Field()
-  @AllowNull(false)
   @ForeignKey(() => Accounts)
   @Column
   authorId: string;
@@ -59,11 +47,12 @@ export default class Posts extends Model {
   @BelongsTo(() => Accounts)
   author: Accounts;
 
-  @Field(() => [Tags])
-  @BelongsToMany(() => Tags, () => PostTag)
-  tags: Tags[];
+  @Field()
+  @ForeignKey(() => Comments)
+  @Column
+  commentId: string;
 
-  @Field(() => [Comments])
-  @HasMany(() => Comments)
-  comments: Comments[];
+  @Field(() => Comments)
+  @BelongsTo(() => Comments)
+  comment: Comments;
 }

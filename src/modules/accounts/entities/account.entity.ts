@@ -23,6 +23,8 @@ import AccountHobby from 'modules/account-hobby/entities/account-hobby.entity';
 import Trips from 'modules/trips/entities/trip.entity';
 import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
 import Posts from 'modules/posts/entities/post.entity';
+import Comments from 'modules/comments/entities/comment.entity';
+import Replies from 'modules/replies/entities/reply.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -82,6 +84,14 @@ export default class Accounts extends Model {
   @Field(() => [Posts])
   @HasMany(() => Posts)
   posts: Posts[];
+
+  @Field(() => [Comments])
+  @HasMany(() => Comments)
+  comments: Comments[];
+
+  @Field(() => [Replies])
+  @HasMany(() => Replies)
+  replies: Replies[];
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {

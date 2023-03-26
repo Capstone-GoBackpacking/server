@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Posts from 'modules/posts/entities/post.entity';
+import Replies from 'modules/replies/entities/reply.entity';
 import {
   Table,
   Model,
@@ -9,7 +10,8 @@ import {
   DataType,
   ForeignKey,
   AllowNull,
-  BelongsTo
+  BelongsTo,
+  HasMany
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -55,4 +57,8 @@ export default class Comments extends Model {
   @Field(() => Accounts)
   @BelongsTo(() => Accounts)
   author: Accounts;
+
+  @Field(() => [Replies])
+  @HasMany(() => Replies)
+  replies: Replies[];
 }
