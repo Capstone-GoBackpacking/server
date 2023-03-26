@@ -124,6 +124,16 @@ type PostTag {
   postId: String!
 }
 
+type Comments {
+  id: ID!
+  content: String!
+  time: String!
+  postId: String!
+  post: Posts!
+  authorId: String!
+  author: Accounts!
+}
+
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
@@ -139,4 +149,5 @@ type Query {
   requestJoinTrips: [RequestJoinTrip!]!
   posts: [Posts!]!
   postTags: [PostTag!]!
+  comments: [Comments!]!
 }

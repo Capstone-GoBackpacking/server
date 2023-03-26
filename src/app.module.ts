@@ -18,6 +18,7 @@ import { TypesModule } from './modules/types/types.module';
 import { RequestJoinTripModule } from './modules/request-join-trip/request-join-trip.module';
 import { PostsModule } from './modules/posts/posts.module';
 import { PostTagModule } from './modules/post-tag/post-tag.module';
+import { CommentsModule } from './modules/comments/comments.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -42,6 +43,7 @@ import SequelizeConfig from './configs/sequelize.config';
     RequestJoinTripModule,
     PostsModule,
     PostTagModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
