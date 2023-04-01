@@ -150,6 +150,11 @@ type Roles {
   accounts: [Accounts!]!
 }
 
+type LoginResponseDTO {
+  access_token: String!
+  account: Accounts!
+}
+
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
@@ -167,4 +172,15 @@ type Query {
   postTags: [PostTag!]!
   comments: [Comments!]!
   replies: [Replies!]!
+}
+
+type Mutation {
+  login(loginInput: AuthInput!): LoginResponseDTO!
+  register(registerInput: AuthInput!): Accounts!
+}
+
+input AuthInput {
+  email: String!
+  password: String!
+  role: String
 }

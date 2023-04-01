@@ -7,21 +7,19 @@ import { RolesModule } from 'modules/roles/roles.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConfigs } from 'configs/jwt.config';
 import { JwtStrategy } from 'strategys/jwt.strategy';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
   imports: [
     AccountsModule,
-    PassportModule,
     RolesModule,
+    PassportModule,
     JwtModule.register({
       secret: jwtConfigs.secret,
       signOptions: { expiresIn: jwtConfigs.expireTime },
-    })
+    }),
   ],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy
-  ],
+  providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
+  exports: [AuthService],
 })
 export class AuthModule { }

@@ -24,7 +24,6 @@ export class AuthService {
         password,
         account.password,
       );
-
       if (isMatchPassword) {
         const result: Partial<typeof account> = account;
         delete result.password;
@@ -38,21 +37,21 @@ export class AuthService {
   async login(account: Accounts) {
     return {
       access_token: this.jwtService.sign({
-        username: account.email,
+        email: account.email,
         sub: account.id,
       }),
       account: account.dataValues,
     };
   }
 
-  async register(input: { email: string; password: string; roleId: string }) {
+  async register(input: { email: string; password: string; role?: string }) {
     const account = await this.accountsService.findOneByEmail(input.email);
 
     if (account) {
       throw new HttpException('Account already exists', HttpStatus.FORBIDDEN);
     }
 
-    const role = await this.rolesService.findOneByName(input.roleId || 'user');
+    const role = await this.rolesService.findOneByName(input.role || 'user');
 
     if (role) {
       return this.accountsService.createNew({

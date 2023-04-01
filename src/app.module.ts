@@ -21,7 +21,6 @@ import { PostTagModule } from './modules/post-tag/post-tag.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { RepliesModule } from './modules/replies/replies.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthModule } from './auth/auth.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
