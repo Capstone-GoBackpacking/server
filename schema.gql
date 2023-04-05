@@ -175,8 +175,19 @@ type Query {
 }
 
 type Mutation {
+  createLocation(input: CreateLocationInput!): Locations!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: AuthInput!): Accounts!
+}
+
+input CreateLocationInput {
+  name: String!
+  address: String!
+  description: String
+  status: String! = "ENABLE"
+  lng: String!
+  lat: String!
+  tags: [String!]!
 }
 
 input AuthInput {

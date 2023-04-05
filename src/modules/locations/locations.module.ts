@@ -7,6 +7,6 @@ import Locations from './entities/location.entity';
 @Module({
   imports: [SequelizeModule.forFeature([Locations])],
   providers: [LocationsResolver, LocationsService],
-  exports: [LocationsService]
+  exports: [LocationsService],
 })
-export class LocationsModule { }
+export class LocationsModule {}

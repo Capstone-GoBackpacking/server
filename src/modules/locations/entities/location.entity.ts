@@ -8,9 +8,10 @@ import {
   PrimaryKey,
   AllowNull,
   DataType,
-  BelongsToMany
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { EStatus } from 'types/types';
+import { HasManyAddAssociationsMixin } from 'sequelize';
 
 @ObjectType()
 @Table({ tableName: 'Locations', timestamps: false })
@@ -19,28 +20,28 @@ export default class Locations extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(20)
+    type: DataType.STRING(20),
   })
   name: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.TEXT
+    type: DataType.TEXT,
   })
   address: string;
 
   @Field({ nullable: true })
   @AllowNull(true)
   @Column({
-    type: DataType.TEXT
+    type: DataType.TEXT,
   })
   description?: string;
 
@@ -48,25 +49,27 @@ export default class Locations extends Model {
   @AllowNull(false)
   @Column({
     type: DataType.ENUM(...Object.values(EStatus)),
-    defaultValue: EStatus.enable
+    defaultValue: EStatus.enable,
   })
   status: EStatus;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   lng: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   lat: string;
 
   @Field(() => [Tags])
   @BelongsToMany(() => Tags, () => LocationTag)
   tags: Tags[];
+
+  addTags: HasManyAddAssociationsMixin<Tags, string>;
 }
