@@ -19,7 +19,11 @@ export class LocationsService {
     private readonly locationModel: typeof Locations,
   ) {}
 
-  async create(body: ICreate) {
+  async findById(id: string): Promise<Locations | null> {
+    return await this.locationModel.findByPk(id);
+  }
+
+  async create(body: ICreate): Promise<Locations> {
     const location = await this.locationModel.create({
       name: body.name,
       address: body.address,
@@ -31,7 +35,7 @@ export class LocationsService {
     if (body.tags) {
       await location.addTags(body.tags);
     }
-    return this.locationModel.findByPk(location.id);
+    return location;
   }
 
   async finds(): Promise<Locations[]> {

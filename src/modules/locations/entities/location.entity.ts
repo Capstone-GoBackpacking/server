@@ -9,9 +9,11 @@ import {
   AllowNull,
   DataType,
   BelongsToMany,
+  HasMany,
 } from 'sequelize-typescript';
 import { EStatus } from 'types/types';
 import { HasManyAddAssociationsMixin } from 'sequelize';
+import Trips from 'modules/trips/entities/trip.entity';
 
 @ObjectType()
 @Table({ tableName: 'Locations', timestamps: false })
@@ -70,6 +72,10 @@ export default class Locations extends Model {
   @Field(() => [Tags])
   @BelongsToMany(() => Tags, () => LocationTag)
   tags: Tags[];
+
+  @Field(() => [Trips])
+  @HasMany(() => Trips)
+  trips: Trips[];
 
   addTags: HasManyAddAssociationsMixin<Tags, string>;
 }

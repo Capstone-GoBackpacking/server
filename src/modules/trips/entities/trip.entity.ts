@@ -12,7 +12,7 @@ import {
   ForeignKey,
   BelongsTo,
   DataType,
-  BelongsToMany
+  BelongsToMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -22,70 +22,70 @@ export default class Trips extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(20)
+    type: DataType.STRING(20),
   })
   name: string;
 
   @Field({ nullable: true })
   @AllowNull(true)
   @Column({
-    type: DataType.TEXT
+    type: DataType.TEXT,
   })
   description?: string;
 
   @Field(() => Int)
   @AllowNull(false)
   @Column({
-    type: DataType.INTEGER
+    type: DataType.INTEGER,
   })
   numberMembers: number;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.DATE
+    type: DataType.DATE,
   })
   timeEnd: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.DATE
+    type: DataType.DATE,
   })
   timeStart: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   meetingLng: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING
+    type: DataType.STRING,
   })
   meetingLat: string;
 
   @Field(() => Int)
   @AllowNull(false)
   @Column({
-    type: DataType.INTEGER
+    type: DataType.INTEGER,
   })
   slot: number;
 
   @Field(() => Int)
   @Column({
     type: DataType.INTEGER,
-    defaultValue: 0
+    defaultValue: 0,
   })
   joined: number;
 
