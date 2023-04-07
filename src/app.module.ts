@@ -21,6 +21,7 @@ import { PostTagModule } from './modules/post-tag/post-tag.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { RepliesModule } from './modules/replies/replies.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UploadModule } from './modules/upload/upload.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -48,8 +49,9 @@ import SequelizeConfig from './configs/sequelize.config';
     CommentsModule,
     RepliesModule,
     AuthModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

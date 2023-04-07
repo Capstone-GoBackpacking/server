@@ -28,6 +28,12 @@ export default class Types extends Model {
   })
   name: string;
 
+  @Field()
+  @Column({
+    type: DataType.TEXT,
+  })
+  icon: string;
+
   @Field(() => [Trips])
   @HasMany(() => Trips)
   trips: Trips[];
