@@ -105,6 +105,7 @@ type RequestJoinTrip {
 type Types {
   id: ID!
   name: String!
+  icon: String!
   trips: [Trips!]!
 }
 

@@ -10,6 +10,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 } from 'uuid';
 import { bucket } from 'firebase';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Controller('upload')
 export class UploadController {
@@ -48,11 +50,11 @@ export class UploadController {
 
       blobWriter.on('finish', () => {
         const fileUrl =
-          'gs://gobackpacking-baf39.appspot.com/' +
+          process.env.FIREBASE_DOMAIN +
           bucket.name +
           '/o/' +
           encodeURIComponent(blob.name) +
-          '?alt=media&token' +
+          '?alt=media&token=' +
           id;
         response.status(HttpStatus.OK).json({
           fileUrl,
