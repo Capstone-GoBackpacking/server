@@ -93,6 +93,7 @@ type Locations {
   lng: String!
   lat: String!
   tags: [Tags!]!
+  trips: [Trips!]!
 }
 
 type RequestJoinTrip {
@@ -163,10 +164,10 @@ type Query {
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
   locations: [Locations!]!
-  tags: [Tags!]!
-  locationTags: [LocationTag!]!
   trips: [Trips!]!
   types: [Types!]!
+  tags: [Tags!]!
+  locationTags: [LocationTag!]!
   requestJoinTrips: [RequestJoinTrip!]!
   posts: [Posts!]!
   postTags: [PostTag!]!
@@ -175,8 +176,35 @@ type Query {
 }
 
 type Mutation {
+  createLocation(input: CreateLocationInput!): Locations!
+  createTrip(input: CreateTripInput!): Trips!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: AuthInput!): Accounts!
+}
+
+input CreateLocationInput {
+  name: String!
+  address: String!
+  description: String
+  status: String! = "ENABLE"
+  lng: String!
+  lat: String!
+  tags: [String!]!
+}
+
+input CreateTripInput {
+  name: String!
+  description: String
+  numberMembers: Int!
+  timeEnd: String!
+  timeStart: String!
+  meetingLng: String!
+  meetingLat: String!
+  slot: Int!
+  locationStartId: String!
+  locationEndId: String!
+  hostId: String!
+  typeId: String!
 }
 
 input AuthInput {
