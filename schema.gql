@@ -165,9 +165,9 @@ type Query {
   accountHobbies: [AccountHobby!]!
   locations: [Locations!]!
   trips: [Trips!]!
+  types: [Types!]!
   tags: [Tags!]!
   locationTags: [LocationTag!]!
-  types: [Types!]!
   requestJoinTrips: [RequestJoinTrip!]!
   posts: [Posts!]!
   postTags: [PostTag!]!

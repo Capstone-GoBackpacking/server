@@ -25,6 +25,14 @@ export class TripsService {
     private readonly tripModel: typeof Trips,
   ) {}
 
+  async findsByType(typeId: string): Promise<Trips[]> {
+    return await this.tripModel.findAll({
+      where: {
+        typeId,
+      },
+    });
+  }
+
   async findsByLocation(locationId: string): Promise<Trips[]> {
     return await this.tripModel.findAll({
       where: {
