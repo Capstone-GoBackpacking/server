@@ -25,6 +25,7 @@ import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-tri
 import Posts from 'modules/posts/entities/post.entity';
 import Comments from 'modules/comments/entities/comment.entity';
 import Replies from 'modules/replies/entities/reply.entity';
+import { HasOneCreateAssociationMixin } from 'sequelize';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -96,6 +97,8 @@ export default class Accounts extends Model {
   @Field(() => [Trips])
   @HasMany(() => Trips)
   trips: Trips[];
+
+  createProfile: HasOneCreateAssociationMixin<Profiles>;
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {

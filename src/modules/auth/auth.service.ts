@@ -5,13 +5,22 @@ import Accounts from 'modules/accounts/entities/account.entity';
 import { JwtService } from '@nestjs/jwt';
 import { RolesService } from 'modules/roles/roles.service';
 
+interface ICreate {
+  email: string;
+  password: string;
+  role?: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+}
+
 @Injectable()
 export class AuthService {
   constructor(
     private readonly accountsService: AccountsService,
     private readonly jwtService: JwtService,
     private readonly rolesService: RolesService,
-  ) { }
+  ) {}
 
   async comparePassword(password: string, hash: string) {
     return await bcrypt.compare(password, hash);
@@ -44,7 +53,7 @@ export class AuthService {
     };
   }
 
-  async register(input: { email: string; password: string; role?: string }) {
+  async register(input: ICreate) {
     const account = await this.accountsService.findOneByEmail(input.email);
 
     if (account) {
@@ -56,11 +65,17 @@ export class AuthService {
     );
 
     if (role) {
-      return this.accountsService.createNew({
+      const newAccount = await this.accountsService.createNew({
         email: input.email,
         password: input.password,
         roleId: role.id,
       });
+      await newAccount.createProfile({
+        firstName: input.firstName,
+        lastName: input.lastName,
+        genderId: input.gender,
+      });
+      return newAccount;
     }
 
     return null;

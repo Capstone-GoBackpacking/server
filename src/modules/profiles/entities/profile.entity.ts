@@ -9,7 +9,8 @@ import {
   AllowNull,
   DataType,
   ForeignKey,
-  BelongsTo
+  BelongsTo,
+  BeforeCreate,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -19,42 +20,42 @@ export default class Profiles extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(15)
+    type: DataType.STRING(15),
   })
   firstName: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(15)
+    type: DataType.STRING(15),
   })
   lastName: string;
-
-  @Field()
-  @AllowNull(false)
-  @Column({
-    type: DataType.STRING(30)
-  })
-  fullName: string;
 
   @Field({ nullable: true })
   @AllowNull(true)
   @Column({
-    type: DataType.DATEONLY
+    type: DataType.STRING(30),
+  })
+  fullName?: string;
+
+  @Field({ nullable: true })
+  @AllowNull(true)
+  @Column({
+    type: DataType.DATEONLY,
   })
   birthday?: string;
 
   @Field({ nullable: true })
   @AllowNull(true)
   @Column({
-    type: DataType.STRING(100)
+    type: DataType.STRING(100),
   })
   address?: string;
 
@@ -76,5 +77,10 @@ export default class Profiles extends Model {
 
   @Field(() => Genders)
   @BelongsTo(() => Genders)
-  gender: Genders
+  gender: Genders;
+
+  @BeforeCreate
+  static async fullName(instance: Profiles) {
+    instance.fullName = instance.firstName + ' ' + instance.lastName;
+  }
 }

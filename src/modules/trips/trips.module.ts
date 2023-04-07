@@ -12,7 +12,7 @@ import { AccountsModule } from 'modules/accounts/accounts.module';
     SequelizeModule.forFeature([Trips]),
     forwardRef(() => LocationsModule),
     forwardRef(() => TypesModule),
-    forwardRef(() => AccountsModule)
+    forwardRef(() => AccountsModule),
   ],
   providers: [TripsResolver, TripsService],
   exports: [TripsService],

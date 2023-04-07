@@ -12,7 +12,7 @@ type Profiles {
   id: ID!
   firstName: String!
   lastName: String!
-  fullName: String!
+  fullName: String
   birthday: String
   address: String
   accountId: String!
@@ -212,4 +212,7 @@ input AuthInput {
   email: String!
   password: String!
   role: String
+  firstName: String!
+  lastName: String!
+  gender: String!
 }

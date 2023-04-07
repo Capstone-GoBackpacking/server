@@ -22,7 +22,7 @@ export class TripsResolver {
     private readonly tripsService: TripsService,
     private readonly locationsService: LocationsService,
     private readonly typesService: TypesService,
-    private readonly accountsService: AccountsService
+    private readonly accountsService: AccountsService,
   ) {}
 
   @ResolveField('host', () => Accounts)

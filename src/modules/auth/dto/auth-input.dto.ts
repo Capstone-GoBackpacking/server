@@ -10,4 +10,13 @@ export class AuthInput {
 
   @Field({ nullable: true })
   role?: string;
+
+  @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
+  gender: string;
 }
