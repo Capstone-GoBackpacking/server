@@ -12,9 +12,9 @@ import {
   BeforeCreate,
   HasOne,
   BelongsToMany,
-  HasMany
+  HasMany,
 } from 'sequelize-typescript';
-import { EStatus } from 'types/types'
+import { EStatus } from 'types/types';
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
 import Profiles from 'modules/profiles/entities/profile.entity';
@@ -33,7 +33,7 @@ export default class Accounts extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
@@ -41,21 +41,21 @@ export default class Accounts extends Model {
   @Unique(true)
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(100)
+    type: DataType.STRING(100),
   })
   email: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.TEXT
+    type: DataType.TEXT,
   })
   password: string;
 
   @Field()
   @Column({
     type: DataType.ENUM(...Object.values(EStatus)),
-    defaultValue: EStatus.enable
+    defaultValue: EStatus.enable,
   })
   status: EStatus;
 
@@ -93,10 +93,14 @@ export default class Accounts extends Model {
   @HasMany(() => Replies)
   replies: Replies[];
 
+  @Field(() => [Trips])
+  @HasMany(() => Trips)
+  trips: Trips[];
+
   @BeforeCreate
   static async hashPassword(instance: Accounts) {
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(instance.password, salt)
-    instance.password = hash
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(instance.password, salt);
+    instance.password = hash;
   }
 }

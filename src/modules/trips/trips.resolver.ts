@@ -13,6 +13,8 @@ import { LocationsService } from 'modules/locations/locations.service';
 import Locations from 'modules/locations/entities/location.entity';
 import Types from 'modules/types/entities/type.entity';
 import { TypesService } from 'modules/types/types.service';
+import Accounts from 'modules/accounts/entities/account.entity';
+import { AccountsService } from 'modules/accounts/accounts.service';
 
 @Resolver(() => Trips)
 export class TripsResolver {
@@ -20,7 +22,13 @@ export class TripsResolver {
     private readonly tripsService: TripsService,
     private readonly locationsService: LocationsService,
     private readonly typesService: TypesService,
+    private readonly accountsService: AccountsService
   ) {}
+
+  @ResolveField('host', () => Accounts)
+  async getHost(@Parent() trip: Trips) {
+    return await this.accountsService.findById(trip.hostId);
+  }
 
   @ResolveField('type', () => Types)
   async getType(@Parent() trip: Trips) {
