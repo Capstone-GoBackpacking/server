@@ -9,8 +9,6 @@ interface ICreate {
   numberMembers: number;
   timeEnd: string;
   timeStart: string;
-  meetingLng: string;
-  meetingLat: string;
   slot: number;
   locationStartId: string;
   locationEndId: string;
@@ -24,6 +22,14 @@ export class TripsService {
     @InjectModel(Trips)
     private readonly tripModel: typeof Trips,
   ) {}
+
+  async findsByHost(hostId: string): Promise<Trips[]> {
+    return await this.tripModel.findAll({
+      where: {
+        hostId,
+      },
+    });
+  }
 
   async findsByType(typeId: string): Promise<Trips[]> {
     return await this.tripModel.findAll({
@@ -50,8 +56,6 @@ export class TripsService {
     numberMembers,
     timeEnd,
     timeStart,
-    meetingLat,
-    meetingLng,
     slot,
     locationEndId,
     locationStartId,
@@ -64,8 +68,6 @@ export class TripsService {
       numberMembers,
       timeEnd,
       timeStart,
-      meetingLat,
-      meetingLng,
       slot,
       locationEndId,
       locationStartId,

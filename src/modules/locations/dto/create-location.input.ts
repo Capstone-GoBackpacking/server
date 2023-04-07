@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { EStatus } from 'types/types';
+import { EStatus } from 'common/types/enums';
 // import { EStatus } from 'types/types';
 
 @InputType()

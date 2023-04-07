@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import Locations from './entities/location.entity';
+import { EStatus } from 'common/types/enums';
 
 interface ICreate {
   name: string;
@@ -39,6 +40,10 @@ export class LocationsService {
   }
 
   async finds(): Promise<Locations[]> {
-    return await this.locationModel.findAll();
+    return await this.locationModel.findAll({
+      where: {
+        status: EStatus.enable,
+      },
+    });
   }
 }

@@ -7,7 +7,4 @@ export class AuthInput {
 
   @Field()
   password: string;
-
-  @Field({ nullable: true })
-  role?: string;
 }

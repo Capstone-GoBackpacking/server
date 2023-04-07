@@ -12,9 +12,9 @@ import {
   BeforeCreate,
   HasOne,
   BelongsToMany,
-  HasMany
+  HasMany,
 } from 'sequelize-typescript';
-import { EStatus } from 'types/types'
+import { EStatus } from 'common/types/enums';
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
 import Profiles from 'modules/profiles/entities/profile.entity';
@@ -25,6 +25,7 @@ import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-tri
 import Posts from 'modules/posts/entities/post.entity';
 import Comments from 'modules/comments/entities/comment.entity';
 import Replies from 'modules/replies/entities/reply.entity';
+import { HasOneCreateAssociationMixin } from 'sequelize';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -33,7 +34,7 @@ export default class Accounts extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
@@ -41,21 +42,21 @@ export default class Accounts extends Model {
   @Unique(true)
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(100)
+    type: DataType.STRING(100),
   })
   email: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.TEXT
+    type: DataType.TEXT,
   })
   password: string;
 
   @Field()
   @Column({
     type: DataType.ENUM(...Object.values(EStatus)),
-    defaultValue: EStatus.enable
+    defaultValue: EStatus.enable,
   })
   status: EStatus;
 
@@ -93,10 +94,16 @@ export default class Accounts extends Model {
   @HasMany(() => Replies)
   replies: Replies[];
 
+  @Field(() => [Trips])
+  @HasMany(() => Trips)
+  trips: Trips[];
+
+  createProfile: HasOneCreateAssociationMixin<Profiles>;
+
   @BeforeCreate
   static async hashPassword(instance: Accounts) {
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(instance.password, salt)
-    instance.password = hash
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(instance.password, salt);
+    instance.password = hash;
   }
 }

@@ -12,7 +12,7 @@ type Profiles {
   id: ID!
   firstName: String!
   lastName: String!
-  fullName: String!
+  fullName: String
   birthday: String
   address: String
   accountId: String!
@@ -115,8 +115,6 @@ type Trips {
   numberMembers: Int!
   timeEnd: String!
   timeStart: String!
-  meetingLng: String!
-  meetingLat: String!
   slot: Int!
   joined: Int!
   locationStartId: String!
@@ -143,6 +141,7 @@ type Accounts {
   posts: [Posts!]!
   comments: [Comments!]!
   replies: [Replies!]!
+  trips: [Trips!]!
 }
 
 type Roles {
@@ -159,13 +158,13 @@ type LoginResponseDTO {
 type Query {
   roles: [Roles!]!
   accounts: [Accounts!]!
+  trips: [Trips!]!
+  locations: [Locations!]!
+  types: [Types!]!
   genders: [Genders!]!
   profiles: [Profiles!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
-  locations: [Locations!]!
-  trips: [Trips!]!
-  types: [Types!]!
   tags: [Tags!]!
   locationTags: [LocationTag!]!
   requestJoinTrips: [RequestJoinTrip!]!
@@ -176,10 +175,22 @@ type Query {
 }
 
 type Mutation {
-  createLocation(input: CreateLocationInput!): Locations!
   createTrip(input: CreateTripInput!): Trips!
+  createLocation(input: CreateLocationInput!): Locations!
   login(loginInput: AuthInput!): LoginResponseDTO!
-  register(registerInput: AuthInput!): Accounts!
+  register(registerInput: RegisterInput!): Accounts!
+}
+
+input CreateTripInput {
+  name: String!
+  description: String
+  numberMembers: Int!
+  timeEnd: String!
+  timeStart: String!
+  slot: Int!
+  locationStartId: String!
+  locationEndId: String!
+  typeId: String!
 }
 
 input CreateLocationInput {
@@ -192,23 +203,16 @@ input CreateLocationInput {
   tags: [String!]!
 }
 
-input CreateTripInput {
-  name: String!
-  description: String
-  numberMembers: Int!
-  timeEnd: String!
-  timeStart: String!
-  meetingLng: String!
-  meetingLat: String!
-  slot: Int!
-  locationStartId: String!
-  locationEndId: String!
-  hostId: String!
-  typeId: String!
-}
-
 input AuthInput {
   email: String!
   password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
   role: String
+  firstName: String!
+  lastName: String!
+  gender: String!
 }

@@ -7,7 +7,7 @@ import {
   PrimaryKey,
   Unique,
   HasMany,
-  DataType
+  DataType,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -17,14 +17,14 @@ export default class Types extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @Unique(true)
   @Column({
-    type: DataType.STRING(20)
+    type: DataType.STRING(20),
   })
   name: string;
 

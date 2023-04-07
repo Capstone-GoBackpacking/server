@@ -1,13 +1,23 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AccountsService } from './accounts.service';
 import Accounts from './entities/account.entity';
+import { TripsService } from 'modules/trips/trips.service';
+import Trips from 'modules/trips/entities/trip.entity';
 
 @Resolver(() => Accounts)
 export class AccountsResolver {
-  constructor(private readonly accountsService: AccountsService) { }
+  constructor(
+    private readonly accountsService: AccountsService,
+    private readonly tripsService: TripsService,
+  ) {}
+
+  @ResolveField('trips', () => [Trips])
+  async getTrips(@Parent() account: Accounts) {
+    return await this.tripsService.findsByHost(account.id);
+  }
 
   @Query(() => [Accounts])
   async accounts(): Promise<Accounts[]> {
-    return await this.accountsService.finds()
+    return await this.accountsService.finds();
   }
 }
