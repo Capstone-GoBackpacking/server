@@ -12,18 +12,12 @@ export class CreateTripInput {
   timeEnd: string;
   @Field()
   timeStart: string;
-  @Field()
-  meetingLng: string;
-  @Field()
-  meetingLat: string;
   @Field(() => Int)
   slot: number;
   @Field()
   locationStartId: string;
   @Field()
   locationEndId: string;
-  @Field()
-  hostId: string;
   @Field()
   typeId: string;
 }

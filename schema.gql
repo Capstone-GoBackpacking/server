@@ -115,8 +115,6 @@ type Trips {
   numberMembers: Int!
   timeEnd: String!
   timeStart: String!
-  meetingLng: String!
-  meetingLat: String!
   slot: Int!
   joined: Int!
   locationStartId: String!
@@ -180,7 +178,7 @@ type Mutation {
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   login(loginInput: AuthInput!): LoginResponseDTO!
-  register(registerInput: AuthInput!): Accounts!
+  register(registerInput: RegisterInput!): Accounts!
 }
 
 input CreateTripInput {
@@ -189,12 +187,9 @@ input CreateTripInput {
   numberMembers: Int!
   timeEnd: String!
   timeStart: String!
-  meetingLng: String!
-  meetingLat: String!
   slot: Int!
   locationStartId: String!
   locationEndId: String!
-  hostId: String!
   typeId: String!
 }
 
@@ -209,6 +204,11 @@ input CreateLocationInput {
 }
 
 input AuthInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
   email: String!
   password: String!
   role: String

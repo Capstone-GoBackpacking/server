@@ -61,20 +61,6 @@ export default class Trips extends Model {
   })
   timeStart: string;
 
-  @Field()
-  @AllowNull(false)
-  @Column({
-    type: DataType.STRING,
-  })
-  meetingLng: string;
-
-  @Field()
-  @AllowNull(false)
-  @Column({
-    type: DataType.STRING,
-  })
-  meetingLat: string;
-
   @Field(() => Int)
   @AllowNull(false)
   @Column({

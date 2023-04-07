@@ -9,8 +9,6 @@ interface ICreate {
   numberMembers: number;
   timeEnd: string;
   timeStart: string;
-  meetingLng: string;
-  meetingLat: string;
   slot: number;
   locationStartId: string;
   locationEndId: string;
@@ -58,8 +56,6 @@ export class TripsService {
     numberMembers,
     timeEnd,
     timeStart,
-    meetingLat,
-    meetingLng,
     slot,
     locationEndId,
     locationStartId,
@@ -72,8 +68,6 @@ export class TripsService {
       numberMembers,
       timeEnd,
       timeStart,
-      meetingLat,
-      meetingLng,
       slot,
       locationEndId,
       locationStartId,

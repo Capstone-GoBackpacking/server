@@ -14,7 +14,7 @@ import {
   BelongsToMany,
   HasMany,
 } from 'sequelize-typescript';
-import { EStatus } from 'types/types';
+import { EStatus } from 'common/types/enums';
 import Roles from 'modules/roles/entities/role.entity';
 import * as bcrypt from 'bcrypt';
 import Profiles from 'modules/profiles/entities/profile.entity';

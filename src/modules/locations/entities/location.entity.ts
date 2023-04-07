@@ -11,7 +11,7 @@ import {
   BelongsToMany,
   HasMany,
 } from 'sequelize-typescript';
-import { EStatus } from 'types/types';
+import { EStatus } from 'common/types/enums';
 import { HasManyAddAssociationsMixin } from 'sequelize';
 import Trips from 'modules/trips/entities/trip.entity';
 

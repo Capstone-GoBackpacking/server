@@ -7,16 +7,4 @@ export class AuthInput {
 
   @Field()
   password: string;
-
-  @Field({ nullable: true })
-  role?: string;
-
-  @Field()
-  firstName: string;
-
-  @Field()
-  lastName: string;
-
-  @Field()
-  gender: string;
 }
