@@ -6,10 +6,18 @@ import Profiles from './entities/profile.entity';
 export class ProfilesService {
   constructor(
     @InjectModel(Profiles)
-    private readonly profileModel: typeof Profiles
-  ) { }
+    private readonly profileModel: typeof Profiles,
+  ) {}
+
+  async findByAccount(accountId: string): Promise<Profiles | null> {
+    return await this.profileModel.findOne({
+      where: {
+        accountId,
+      },
+    });
+  }
 
   async finds(): Promise<Profiles[]> {
-    return await this.profileModel.findAll()
+    return await this.profileModel.findAll();
   }
 }

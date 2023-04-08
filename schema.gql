@@ -163,8 +163,8 @@ type Query {
   trips: [Trips!]!
   locations: [Locations!]!
   types: [Types!]!
-  genders: [Genders!]!
   profiles: [Profiles!]!
+  genders: [Genders!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
   tags: [Tags!]!
