@@ -79,6 +79,13 @@ export default class Profiles extends Model {
   @BelongsTo(() => Genders)
   gender: Genders;
 
+  @Field({ nullable: true })
+  @AllowNull(true)
+  @Column({
+    type: DataType.TEXT,
+  })
+  avatar: string;
+
   @BeforeCreate
   static async fullName(instance: Profiles) {
     instance.fullName = instance.firstName + ' ' + instance.lastName;

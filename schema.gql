@@ -19,6 +19,7 @@ type Profiles {
   account: Accounts!
   genderId: String!
   gender: Genders!
+  avatar: String
 }
 
 type AccountHobby {
