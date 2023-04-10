@@ -93,6 +93,7 @@ type Locations {
   status: String!
   lng: String!
   lat: String!
+  thumbnail: String
   tags: [Tags!]!
   trips: [Trips!]!
 }
@@ -106,7 +107,7 @@ type RequestJoinTrip {
 type Types {
   id: ID!
   name: String!
-  icon: String!
+  icon: String
   trips: [Trips!]!
 }
 

@@ -69,6 +69,13 @@ export default class Locations extends Model {
   })
   lat: string;
 
+  @Field({ nullable: true })
+  @AllowNull(true)
+  @Column({
+    type: DataType.TEXT,
+  })
+  thumbnail?: string;
+
   @Field(() => [Tags])
   @BelongsToMany(() => Tags, () => LocationTag)
   tags: Tags[];

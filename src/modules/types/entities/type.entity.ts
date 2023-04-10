@@ -8,6 +8,7 @@ import {
   Unique,
   HasMany,
   DataType,
+  AllowNull,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -28,11 +29,12 @@ export default class Types extends Model {
   })
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
+  @AllowNull(true)
   @Column({
     type: DataType.TEXT,
   })
-  icon: string;
+  icon?: string;
 
   @Field(() => [Trips])
   @HasMany(() => Trips)

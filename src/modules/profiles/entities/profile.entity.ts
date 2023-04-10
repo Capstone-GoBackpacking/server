@@ -84,7 +84,7 @@ export default class Profiles extends Model {
   @Column({
     type: DataType.TEXT,
   })
-  avatar: string;
+  avatar?: string;
 
   @BeforeCreate
   static async fullName(instance: Profiles) {
