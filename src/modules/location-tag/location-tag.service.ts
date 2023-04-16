@@ -6,10 +6,10 @@ import LocationTag from './entities/location-tag.entity';
 export class LocationTagService {
   constructor(
     @InjectModel(LocationTag)
-    private readonly locationTagModel: typeof LocationTag
-  ) { }
+    private readonly locationTagModel: typeof LocationTag,
+  ) {}
 
   async finds(): Promise<LocationTag[]> {
-    return await this.locationTagModel.findAll()
+    return await this.locationTagModel.findAll();
   }
 }

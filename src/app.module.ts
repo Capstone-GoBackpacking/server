@@ -22,6 +22,7 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { RepliesModule } from './modules/replies/replies.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { ReviewsModule } from './modules/reviews/reviews.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -50,6 +51,7 @@ import SequelizeConfig from './configs/sequelize.config';
     RepliesModule,
     AuthModule,
     UploadModule,
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

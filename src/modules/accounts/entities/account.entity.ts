@@ -26,6 +26,7 @@ import Posts from 'modules/posts/entities/post.entity';
 import Comments from 'modules/comments/entities/comment.entity';
 import Replies from 'modules/replies/entities/reply.entity';
 import { HasOneCreateAssociationMixin } from 'sequelize';
+import Reviews from 'modules/reviews/entities/review.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -97,6 +98,10 @@ export default class Accounts extends Model {
   @Field(() => [Trips])
   @HasMany(() => Trips)
   trips: Trips[];
+
+  @Field(() => [Reviews])
+  @HasMany(() => Reviews)
+  reviews: Reviews[];
 
   createProfile: HasOneCreateAssociationMixin<Profiles>;
 

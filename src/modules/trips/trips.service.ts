@@ -61,7 +61,7 @@ export class TripsService {
     locationStartId,
     hostId,
     typeId,
-  }: ICreate) {
+  }: ICreate): Promise<Trips> {
     return await this.tripModel.create({
       name,
       description,
