@@ -94,6 +94,13 @@ type Reviews {
   location: Locations!
 }
 
+type LocationImages {
+  id: ID!
+  url: String!
+  locationId: String!
+  location: Locations!
+}
+
 type Locations {
   id: ID!
   name: String!
@@ -106,6 +113,7 @@ type Locations {
   tags: [Tags!]!
   trips: [Trips!]!
   reviews: [Reviews!]!
+  images: [LocationImages!]!
 }
 
 type RequestJoinTrip {
@@ -171,6 +179,7 @@ type LoginResponseDTO {
 
 type Query {
   roles: [Roles!]!
+  getAccountById(input: String!): Accounts!
   accounts: [Accounts!]!
   trips: [Trips!]!
   getLocationById(id: String!): Locations!
@@ -189,12 +198,14 @@ type Query {
   postTags: [PostTag!]!
   comments: [Comments!]!
   replies: [Replies!]!
+  currentAccount: Accounts!
 }
 
 type Mutation {
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   createReview(input: CreateReviewInput!): Reviews!
+  createLocationImages(input: CreateLocationImageInput!): LocationImages!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
 }
@@ -224,6 +235,11 @@ input CreateLocationInput {
 input CreateReviewInput {
   content: String!
   locationId: String!
+}
+
+input CreateLocationImageInput {
+  locationId: String!
+  images: [String!]!
 }
 
 input AuthInput {

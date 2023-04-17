@@ -1,4 +1,4 @@
-import { Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AccountsService } from './accounts.service';
 import Accounts from './entities/account.entity';
 import { TripsService } from 'modules/trips/trips.service';
@@ -16,6 +16,11 @@ export class AccountsResolver {
     private readonly profilesService: ProfilesService,
     private readonly reviewsService: ReviewsService,
   ) {}
+
+  @Query(() => Accounts)
+  async getAccountById(@Args('input') id: string) {
+    return await this.accountsService.findById(id);
+  }
 
   @ResolveField('reviews', () => [Reviews])
   async getReviews(@Parent() account: Accounts) {

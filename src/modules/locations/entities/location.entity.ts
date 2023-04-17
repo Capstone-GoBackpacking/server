@@ -15,6 +15,7 @@ import { EStatus } from 'common/types/enums';
 import { HasManyAddAssociationsMixin } from 'sequelize';
 import Trips from 'modules/trips/entities/trip.entity';
 import Reviews from 'modules/reviews/entities/review.entity';
+import LocationImages from 'modules/location-images/entities/location-image.entity';
 
 @ObjectType()
 @Table({ tableName: 'Locations', timestamps: false })
@@ -88,6 +89,10 @@ export default class Locations extends Model {
   @Field(() => [Reviews])
   @HasMany(() => Reviews)
   reviews: Reviews[];
+
+  @Field(() => [LocationImages])
+  @HasMany(() => LocationImages)
+  images: LocationImages[];
 
   addTags: HasManyAddAssociationsMixin<Tags, string>;
 }
