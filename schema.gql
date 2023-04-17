@@ -177,6 +177,8 @@ type Query {
   locations: [Locations!]!
   types: [Types!]!
   profiles: [Profiles!]!
+  reviewsOfLocation(locationId: String!): [Reviews!]!
+  reviews: [Reviews!]!
   genders: [Genders!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!

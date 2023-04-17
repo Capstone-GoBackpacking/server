@@ -3,6 +3,7 @@ import {
   Context,
   Mutation,
   Parent,
+  Query,
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
@@ -23,6 +24,11 @@ export class ReviewsResolver {
     private readonly accountsService: AccountsService,
     private readonly locationsService: LocationsService,
   ) {}
+
+  @Query(() => [Reviews])
+  async reviewsOfLocation(@Args('locationId') id: string) {
+    return await this.reviewsService.findsByLocation(id);
+  }
 
   @ResolveField('host', () => Accounts)
   async getHost(@Parent() review: Reviews) {
@@ -45,5 +51,10 @@ export class ReviewsResolver {
       ...input,
       hostId: id,
     });
+  }
+
+  @Query(() => [Reviews])
+  async reviews() {
+    return await this.reviewsService.finds();
   }
 }

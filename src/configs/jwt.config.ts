@@ -3,5 +3,5 @@ dotenv.config();
 
 export const jwtConfigs = {
   secret: process.env.JWT_SECRET_KEY,
-  expireTime: '60s',
+  expireTime: '1h',
 };

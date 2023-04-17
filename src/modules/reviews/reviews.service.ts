@@ -38,4 +38,8 @@ export class ReviewsService {
       content,
     });
   }
+
+  async finds(): Promise<Reviews[]> {
+    return await this.reviewModel.findAll();
+  }
 }
