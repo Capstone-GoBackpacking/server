@@ -192,9 +192,9 @@ type Query {
 type Mutation {
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
+  createReview(input: CreateReviewInput!): Reviews!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
-  createReview(input: CreateReviewInput!): Reviews!
 }
 
 input CreateTripInput {
@@ -219,6 +219,11 @@ input CreateLocationInput {
   tags: [String!]!
 }
 
+input CreateReviewInput {
+  content: String!
+  locationId: String!
+}
+
 input AuthInput {
   email: String!
   password: String!
@@ -231,9 +236,4 @@ input RegisterInput {
   firstName: String!
   lastName: String!
   gender: String!
-}
-
-input CreateReviewInput {
-  content: String!
-  locationId: String!
 }

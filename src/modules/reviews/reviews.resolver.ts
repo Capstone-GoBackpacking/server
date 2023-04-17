@@ -1,13 +1,41 @@
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { ReviewsService } from './reviews.service';
 import Reviews from './entities/review.entity';
 import { CreateReviewInput } from './dto/create-review.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'common/guards/jwt-auth.guard';
+import { AccountsService } from 'modules/accounts/accounts.service';
+import Accounts from 'modules/accounts/entities/account.entity';
+import Locations from 'modules/locations/entities/location.entity';
+import { LocationsService } from 'modules/locations/locations.service';
 
 @Resolver(() => Reviews)
 export class ReviewsResolver {
-  constructor(private readonly reviewsService: ReviewsService) {}
+  constructor(
+    private readonly reviewsService: ReviewsService,
+    private readonly accountsService: AccountsService,
+    private readonly locationsService: LocationsService,
+  ) {}
+
+  @ResolveField('host', () => Accounts)
+  async getHost(@Parent() review: Reviews) {
+    return await this.accountsService.findById(review.hostId);
+  }
+
+  @ResolveField('location', () => Locations)
+  async getLocation(@Parent() review: Reviews) {
+    return await this.locationsService.findById(review.locationId);
+  }
 
   @Mutation(() => Reviews)
+  @UseGuards(JwtAuthGuard)
   async createReview(
     @Args('input') input: CreateReviewInput,
     @Context() ctx: any,

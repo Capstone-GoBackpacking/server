@@ -9,6 +9,22 @@ export class ReviewsService {
     private readonly reviewModel: typeof Reviews,
   ) {}
 
+  async findsByLocation(locationId: string): Promise<Reviews[]> {
+    return await this.reviewModel.findAll({
+      where: {
+        locationId,
+      },
+    });
+  }
+
+  async findsByHost(hostId: string): Promise<Reviews[]> {
+    return await this.reviewModel.findAll({
+      where: {
+        hostId,
+      },
+    });
+  }
+
   async create({
     hostId,
     locationId,

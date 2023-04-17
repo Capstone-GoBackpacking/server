@@ -12,13 +12,21 @@ import { CreateLocationInput } from './dto/create-location.input';
 import { TripsService } from 'modules/trips/trips.service';
 import Trips from 'modules/trips/entities/trip.entity';
 import Tags from 'modules/tags/entities/tag.entity';
+import { ReviewsService } from 'modules/reviews/reviews.service';
+import Reviews from 'modules/reviews/entities/review.entity';
 
 @Resolver(() => Locations)
 export class LocationsResolver {
   constructor(
     private readonly locationsService: LocationsService,
     private readonly tripsService: TripsService,
+    private readonly reviewsService: ReviewsService,
   ) {}
+
+  @ResolveField('reviews', () => [Reviews])
+  async getReviews(@Parent() location: Locations) {
+    return await this.reviewsService.findsByLocation(location.id);
+  }
 
   @ResolveField('trips', () => [Trips])
   async getTrips(@Parent() location: Locations) {

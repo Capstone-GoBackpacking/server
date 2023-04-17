@@ -5,6 +5,8 @@ import { TripsService } from 'modules/trips/trips.service';
 import Trips from 'modules/trips/entities/trip.entity';
 import Profiles from 'modules/profiles/entities/profile.entity';
 import { ProfilesService } from 'modules/profiles/profiles.service';
+import Reviews from 'modules/reviews/entities/review.entity';
+import { ReviewsService } from 'modules/reviews/reviews.service';
 
 @Resolver(() => Accounts)
 export class AccountsResolver {
@@ -12,7 +14,13 @@ export class AccountsResolver {
     private readonly accountsService: AccountsService,
     private readonly tripsService: TripsService,
     private readonly profilesService: ProfilesService,
+    private readonly reviewsService: ReviewsService,
   ) {}
+
+  @ResolveField('reviews', () => [Reviews])
+  async getReviews(@Parent() account: Accounts) {
+    return await this.reviewsService.findsByHost(account.id);
+  }
 
   @ResolveField('profile', () => Profiles)
   async getProfile(@Parent() account: Accounts) {
