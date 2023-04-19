@@ -17,6 +17,11 @@ export class AccountsResolver {
     private readonly reviewsService: ReviewsService,
   ) {}
 
+  @ResolveField('joinedTrips', () => [Trips])
+  async getJoinedTrips(@Parent() account: Accounts) {
+    return await this.accountsService.findsJoinedTrip(account.id);
+  }
+
   @Query(() => Accounts)
   async getAccountById(@Args('input') id: string) {
     return await this.accountsService.findById(id);

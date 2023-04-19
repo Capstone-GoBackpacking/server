@@ -6,8 +6,6 @@ export class CreateTripInput {
   name: string;
   @Field({ nullable: true })
   description?: string;
-  @Field(() => Int)
-  numberMembers: number;
   @Field()
   timeEnd: string;
   @Field()
@@ -20,4 +18,12 @@ export class CreateTripInput {
   locationEndId: string;
   @Field()
   typeId: string;
+}
+
+@InputType()
+export class JoinTripInput {
+  @Field()
+  tripId: string;
+  @Field()
+  accountId: string;
 }

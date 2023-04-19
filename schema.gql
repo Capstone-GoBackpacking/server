@@ -133,7 +133,6 @@ type Trips {
   id: ID!
   name: String!
   description: String
-  numberMembers: Int!
   timeEnd: String!
   timeStart: String!
   slot: Int!
@@ -147,6 +146,7 @@ type Trips {
   typeId: String!
   type: Types!
   joinedMember: [Accounts!]!
+  thumbnail: String!
 }
 
 type Accounts {
@@ -202,6 +202,7 @@ type Query {
 }
 
 type Mutation {
+  joinTrip(input: String!): Trips!
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   createReview(input: CreateReviewInput!): Reviews!
@@ -213,7 +214,6 @@ type Mutation {
 input CreateTripInput {
   name: String!
   description: String
-  numberMembers: Int!
   timeEnd: String!
   timeStart: String!
   slot: Int!

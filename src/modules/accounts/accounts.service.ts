@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import Trips from 'modules/trips/entities/trip.entity';
 import Accounts from './entities/account.entity';
 
 @Injectable()
@@ -8,6 +9,17 @@ export class AccountsService {
     @InjectModel(Accounts)
     private readonly accountModel: typeof Accounts,
   ) {}
+
+  async findsJoinedTrip(accountId: string) {
+    return await this.accountModel
+      .findOne({
+        where: {
+          id: accountId,
+        },
+        include: { model: Trips, as: 'joinedTrips' },
+      })
+      .then((res) => res?.joinedTrips);
+  }
 
   async findById(id: string): Promise<Accounts | null> {
     return await this.accountModel.findByPk(id);

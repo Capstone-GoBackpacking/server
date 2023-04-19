@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import Locations from './entities/location.entity';
 import { EStatus } from 'common/types/enums';
+import Tags from 'modules/tags/entities/tag.entity';
 
 interface ICreate {
   name: string;
@@ -19,6 +20,19 @@ export class LocationsService {
     @InjectModel(Locations)
     private readonly locationModel: typeof Locations,
   ) {}
+
+  async findsTag(locationId: string) {
+    return await this.locationModel
+      .findOne({
+        where: {
+          id: locationId,
+        },
+        include: {
+          model: Tags,
+        },
+      })
+      .then((res) => res?.tags);
+  }
 
   async findById(id: string): Promise<Locations | null> {
     return await this.locationModel.findByPk(id);

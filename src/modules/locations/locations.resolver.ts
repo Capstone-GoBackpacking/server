@@ -43,12 +43,7 @@ export class LocationsResolver {
 
   @ResolveField('tags', () => [Tags])
   async getTags(@Parent() location: Locations) {
-    return await Locations.findOne({
-      where: {
-        id: location.id,
-      },
-      include: Tags,
-    }).then((res: any) => res.tags);
+    return await this.locationsService.findsTag(location.id);
   }
 
   @Query(() => Locations)

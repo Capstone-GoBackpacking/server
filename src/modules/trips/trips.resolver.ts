@@ -28,6 +28,18 @@ export class TripsResolver {
     private readonly accountsService: AccountsService,
   ) {}
 
+  @ResolveField('joinedMember', () => [Accounts])
+  async getJoinedMember(@Parent() trip: Trips) {
+    return await this.tripsService.findsJoinedMember(trip.id);
+  }
+
+  @Mutation(() => Trips)
+  @UseGuards(JwtAuthGuard)
+  async joinTrip(@Args('input') tripId: string, @Context() ctx: any) {
+    const { id } = ctx.req.user;
+    return await this.tripsService.joinTrip(tripId, id);
+  }
+
   @ResolveField('host', () => Accounts)
   async getHost(@Parent() trip: Trips) {
     return await this.accountsService.findById(trip.hostId);

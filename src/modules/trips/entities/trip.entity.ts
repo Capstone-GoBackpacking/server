@@ -3,6 +3,7 @@ import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
 import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
 import Types from 'modules/types/entities/type.entity';
+import { HasManyAddAssociationMixin } from 'sequelize';
 import {
   Table,
   Model,
@@ -39,13 +40,6 @@ export default class Trips extends Model {
     type: DataType.TEXT,
   })
   description?: string;
-
-  @Field(() => Int)
-  @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-  })
-  numberMembers: number;
 
   @Field()
   @AllowNull(false)
@@ -114,4 +108,13 @@ export default class Trips extends Model {
   @Field(() => [Accounts])
   @BelongsToMany(() => Accounts, () => RequestJoinTrip)
   joinedMember: Accounts[];
+
+  @Field()
+  @AllowNull(true)
+  @Column({
+    type: DataType.TEXT,
+  })
+  thumbnail?: string;
+
+  addJoinedMember: HasManyAddAssociationMixin<Accounts, string>;
 }
