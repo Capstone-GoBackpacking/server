@@ -18,6 +18,7 @@ import Accounts from 'modules/accounts/entities/account.entity';
 import { AccountsService } from 'modules/accounts/accounts.service';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth.guard';
+import { distanceCal } from 'common/utils/distance';
 
 @Resolver(() => Trips)
 export class TripsResolver {
@@ -31,13 +32,6 @@ export class TripsResolver {
   @ResolveField('joinedMember', () => [Accounts])
   async getJoinedMember(@Parent() trip: Trips) {
     return await this.tripsService.findsJoinedMember(trip.id);
-  }
-
-  @Mutation(() => Trips)
-  @UseGuards(JwtAuthGuard)
-  async joinTrip(@Args('input') tripId: string, @Context() ctx: any) {
-    const { id } = ctx.req.user;
-    return await this.tripsService.joinTrip(tripId, id);
   }
 
   @ResolveField('host', () => Accounts)
@@ -64,10 +58,31 @@ export class TripsResolver {
   @UseGuards(JwtAuthGuard)
   async createTrip(@Args('input') input: CreateTripInput, @Context() ctx: any) {
     const { id } = ctx.req.user;
+    const locationEnd = await this.locationsService.findById(
+      input.locationEndId,
+    );
+    const locationStart = await this.locationsService.findById(
+      input.locationStartId,
+    );
+    let distance = 0;
+    if (locationEnd && locationStart) {
+      distance = distanceCal(
+        Number(locationEnd?.lat),
+        Number(locationEnd?.lng),
+        Number(locationStart?.lat),
+        Number(locationStart?.lng),
+      );
+    }
     return await this.tripsService.create({
       ...input,
       hostId: id,
+      distance,
     });
+  }
+
+  @Query(() => Trips)
+  async getTripById(@Args('id') id: string) {
+    return await this.tripsService.findById(id);
   }
 
   @Query(() => [Trips])

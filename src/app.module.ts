@@ -24,6 +24,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { LocationImagesModule } from './modules/location-images/location-images.module';
+import { VoteReviewModule } from './modules/vote-review/vote-review.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -54,6 +55,7 @@ import SequelizeConfig from './configs/sequelize.config';
     UploadModule,
     ReviewsModule,
     LocationImagesModule,
+    VoteReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

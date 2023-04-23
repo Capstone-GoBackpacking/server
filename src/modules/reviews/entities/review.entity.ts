@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
+import VoteReview from 'modules/vote-review/entities/vote-review.entity';
 import {
   Model,
   Table,
@@ -9,6 +10,7 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -45,4 +47,8 @@ export default class Reviews extends Model {
   @Field(() => Locations)
   @BelongsTo(() => Locations)
   location: Locations;
+
+  @Field(() => [VoteReview])
+  @HasMany(() => VoteReview)
+  voteReviews: VoteReview[];
 }

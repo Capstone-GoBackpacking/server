@@ -7,7 +7,7 @@ import {
   Column,
   PrimaryKey,
   ForeignKey,
-  DataType
+  DataType,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -17,7 +17,7 @@ export default class RequestJoinTrip extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
@@ -30,4 +30,11 @@ export default class RequestJoinTrip extends Model {
   @ForeignKey(() => Accounts)
   @Column
   memberId: string;
+
+  @Field(() => Boolean)
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: true,
+  })
+  verify: boolean;
 }

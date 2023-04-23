@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int, ID, Float } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
 import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
@@ -109,12 +109,19 @@ export default class Trips extends Model {
   @BelongsToMany(() => Accounts, () => RequestJoinTrip)
   joinedMember: Accounts[];
 
-  @Field()
+  @Field({ nullable: true })
   @AllowNull(true)
   @Column({
     type: DataType.TEXT,
   })
   thumbnail?: string;
+
+  @Field(() => Float)
+  @AllowNull(false)
+  @Column({
+    type: DataType.FLOAT,
+  })
+  distance: number;
 
   addJoinedMember: HasManyAddAssociationMixin<Accounts, string>;
 }

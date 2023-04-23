@@ -9,6 +9,10 @@ export class ReviewsService {
     private readonly reviewModel: typeof Reviews,
   ) {}
 
+  async findById(id: string): Promise<Reviews | null> {
+    return await this.reviewModel.findByPk(id);
+  }
+
   async findsByLocation(locationId: string): Promise<Reviews[]> {
     return await this.reviewModel.findAll({
       where: {

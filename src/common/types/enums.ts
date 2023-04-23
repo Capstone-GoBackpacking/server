@@ -3,3 +3,8 @@ export enum EStatus {
   disable = 'DISABLE',
   pending = 'PENDING',
 }
+
+export enum EVote {
+  up = 'UP',
+  down = 'DOWN',
+}

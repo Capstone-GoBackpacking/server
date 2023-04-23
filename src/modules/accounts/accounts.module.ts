@@ -6,6 +6,7 @@ import Accounts from './entities/account.entity';
 import { TripsModule } from 'modules/trips/trips.module';
 import { ProfilesModule } from 'modules/profiles/profiles.module';
 import { ReviewsModule } from 'modules/reviews/reviews.module';
+import { VoteReviewModule } from 'modules/vote-review/vote-review.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ReviewsModule } from 'modules/reviews/reviews.module';
     forwardRef(() => TripsModule),
     forwardRef(() => ProfilesModule),
     forwardRef(() => ReviewsModule),
+    forwardRef(() => VoteReviewModule),
   ],
   providers: [AccountsResolver, AccountsService],
   exports: [AccountsService],

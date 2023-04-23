@@ -85,6 +85,15 @@ type LocationTag {
   tagId: String!
 }
 
+type VoteReview {
+  id: ID!
+  accountId: String!
+  account: Accounts!
+  reviewId: String!
+  review: Reviews!
+  status: String!
+}
+
 type Reviews {
   id: ID!
   content: String!
@@ -92,6 +101,7 @@ type Reviews {
   host: Accounts!
   locationId: String!
   location: Locations!
+  voteReviews: [VoteReview!]!
 }
 
 type LocationImages {
@@ -120,6 +130,7 @@ type RequestJoinTrip {
   id: ID!
   tripId: String!
   memberId: String!
+  verify: Boolean!
 }
 
 type Types {
@@ -146,7 +157,8 @@ type Trips {
   typeId: String!
   type: Types!
   joinedMember: [Accounts!]!
-  thumbnail: String!
+  thumbnail: String
+  distance: Float!
 }
 
 type Accounts {
@@ -164,6 +176,7 @@ type Accounts {
   replies: [Replies!]!
   trips: [Trips!]!
   reviews: [Reviews!]!
+  voteReviews: [VoteReview!]!
 }
 
 type Roles {
@@ -181,6 +194,7 @@ type Query {
   roles: [Roles!]!
   getAccountById(input: String!): Accounts!
   accounts: [Accounts!]!
+  getTripById(id: String!): Trips!
   trips: [Trips!]!
   getLocationById(id: String!): Locations!
   locations: [Locations!]!
@@ -188,11 +202,13 @@ type Query {
   profiles: [Profiles!]!
   reviewsOfLocation(locationId: String!): [Reviews!]!
   reviews: [Reviews!]!
+  voteReviews: [VoteReview!]!
   genders: [Genders!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
   tags: [Tags!]!
   locationTags: [LocationTag!]!
+  isJoined(input: String!): Boolean!
   requestJoinTrips: [RequestJoinTrip!]!
   posts: [Posts!]!
   postTags: [PostTag!]!
@@ -202,11 +218,13 @@ type Query {
 }
 
 type Mutation {
-  joinTrip(input: String!): Trips!
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   createReview(input: CreateReviewInput!): Reviews!
+  unVoting(id: String!): String!
+  voting(input: CreateVoteReviewInput!): VoteReview!
   createLocationImages(input: CreateLocationImageInput!): LocationImages!
+  joinTrip(input: String!): RequestJoinTrip!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
 }
@@ -235,6 +253,11 @@ input CreateLocationInput {
 input CreateReviewInput {
   content: String!
   locationId: String!
+}
+
+input CreateVoteReviewInput {
+  reviewId: String!
+  status: String!
 }
 
 input CreateLocationImageInput {

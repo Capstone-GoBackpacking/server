@@ -14,6 +14,7 @@ interface ICreate {
   locationEndId: string;
   hostId: string;
   typeId: string;
+  distance: number;
 }
 
 @Injectable()
@@ -22,6 +23,10 @@ export class TripsService {
     @InjectModel(Trips)
     private readonly tripModel: typeof Trips,
   ) {}
+
+  async findById(id: string): Promise<Trips | null> {
+    return await this.tripModel.findByPk(id);
+  }
 
   async findsJoinedMember(tripId: string) {
     return await this.tripModel
@@ -80,6 +85,7 @@ export class TripsService {
     locationStartId,
     hostId,
     typeId,
+    distance,
   }: ICreate): Promise<Trips> {
     return await this.tripModel.create({
       name,
@@ -91,6 +97,7 @@ export class TripsService {
       locationStartId,
       hostId,
       typeId,
+      distance,
     });
   }
 

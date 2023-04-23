@@ -5,12 +5,14 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import Reviews from './entities/review.entity';
 import { AccountsModule } from 'modules/accounts/accounts.module';
 import { LocationsModule } from 'modules/locations/locations.module';
+import { VoteReviewModule } from 'modules/vote-review/vote-review.module';
 
 @Module({
   imports: [
     SequelizeModule.forFeature([Reviews]),
     forwardRef(() => AccountsModule),
     forwardRef(() => LocationsModule),
+    forwardRef(() => VoteReviewModule),
   ],
   providers: [ReviewsResolver, ReviewsService],
   exports: [ReviewsService],

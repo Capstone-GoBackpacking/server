@@ -16,6 +16,8 @@ import { AccountsService } from 'modules/accounts/accounts.service';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
 import { LocationsService } from 'modules/locations/locations.service';
+import { VoteReviewService } from 'modules/vote-review/vote-review.service';
+import VoteReview from 'modules/vote-review/entities/vote-review.entity';
 
 @Resolver(() => Reviews)
 export class ReviewsResolver {
@@ -23,7 +25,13 @@ export class ReviewsResolver {
     private readonly reviewsService: ReviewsService,
     private readonly accountsService: AccountsService,
     private readonly locationsService: LocationsService,
+    private readonly voteReviewService: VoteReviewService,
   ) {}
+
+  @ResolveField('voteReviews', () => [VoteReview])
+  async getVoteReviews(@Parent() review: Reviews) {
+    return await this.voteReviewService.findsByReview(review.id);
+  }
 
   @Query(() => [Reviews])
   async reviewsOfLocation(@Args('locationId') id: string) {
