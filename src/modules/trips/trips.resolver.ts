@@ -19,6 +19,7 @@ import { AccountsService } from 'modules/accounts/accounts.service';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth.guard';
 import { distanceCal } from 'common/utils/distance';
+import { RequestJoinTripService } from 'modules/request-join-trip/request-join-trip.service';
 
 @Resolver(() => Trips)
 export class TripsResolver {
@@ -27,7 +28,15 @@ export class TripsResolver {
     private readonly locationsService: LocationsService,
     private readonly typesService: TypesService,
     private readonly accountsService: AccountsService,
+    private readonly requestJoinTripService: RequestJoinTripService,
   ) {}
+
+  @ResolveField('targetJoined', () => Boolean)
+  @UseGuards(JwtAuthGuard)
+  async targetJoined(@Parent() trip: Trips, @Context() ctx: any) {
+    const { id } = ctx.req.user;
+    return this.requestJoinTripService.isJoined(trip.id, id);
+  }
 
   @ResolveField('joinedMember', () => [Accounts])
   async getJoinedMember(@Parent() trip: Trips) {

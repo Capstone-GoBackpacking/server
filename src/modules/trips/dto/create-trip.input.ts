@@ -18,6 +18,8 @@ export class CreateTripInput {
   locationEndId: string;
   @Field()
   typeId: string;
+  @Field({ nullable: true })
+  thumbnail: string;
 }
 
 @InputType()

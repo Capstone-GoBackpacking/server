@@ -15,6 +15,7 @@ interface ICreate {
   hostId: string;
   typeId: string;
   distance: number;
+  thumbnail: string;
 }
 
 @Injectable()
@@ -86,6 +87,7 @@ export class TripsService {
     hostId,
     typeId,
     distance,
+    thumbnail,
   }: ICreate): Promise<Trips> {
     return await this.tripModel.create({
       name,
@@ -98,6 +100,7 @@ export class TripsService {
       hostId,
       typeId,
       distance,
+      thumbnail,
     });
   }
 

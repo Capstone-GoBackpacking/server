@@ -30,7 +30,7 @@ export default class Trips extends Model {
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING(50),
   })
   name: string;
 

@@ -102,6 +102,7 @@ type Reviews {
   locationId: String!
   location: Locations!
   voteReviews: [VoteReview!]!
+  targetVoted: String!
 }
 
 type LocationImages {
@@ -159,6 +160,7 @@ type Trips {
   joinedMember: [Accounts!]!
   thumbnail: String
   distance: Float!
+  targetJoined: Boolean!
 }
 
 type Accounts {
@@ -203,13 +205,13 @@ type Query {
   reviewsOfLocation(locationId: String!): [Reviews!]!
   reviews: [Reviews!]!
   voteReviews: [VoteReview!]!
+  isJoined(input: String!): Boolean!
+  requestJoinTrips: [RequestJoinTrip!]!
   genders: [Genders!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
   tags: [Tags!]!
   locationTags: [LocationTag!]!
-  isJoined(input: String!): Boolean!
-  requestJoinTrips: [RequestJoinTrip!]!
   posts: [Posts!]!
   postTags: [PostTag!]!
   comments: [Comments!]!
@@ -238,6 +240,7 @@ input CreateTripInput {
   locationStartId: String!
   locationEndId: String!
   typeId: String!
+  thumbnail: String
 }
 
 input CreateLocationInput {

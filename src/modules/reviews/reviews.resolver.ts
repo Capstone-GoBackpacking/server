@@ -28,6 +28,14 @@ export class ReviewsResolver {
     private readonly voteReviewService: VoteReviewService,
   ) {}
 
+  @ResolveField('targetVoted', () => String)
+  @UseGuards(JwtAuthGuard)
+  async targetVoted(@Parent() review: Reviews, @Context() ctx: any) {
+    const { id } = ctx.req.user;
+    const vote = await this.voteReviewService.findByTwoForeign(review.id, id);
+    return vote ? vote.status : '';
+  }
+
   @ResolveField('voteReviews', () => [VoteReview])
   async getVoteReviews(@Parent() review: Reviews) {
     return await this.voteReviewService.findsByReview(review.id);

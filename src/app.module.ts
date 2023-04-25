@@ -34,6 +34,7 @@ import SequelizeConfig from './configs/sequelize.config';
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: 'schema.gql',
+      fieldResolverEnhancers: ['guards'],
     }),
     RolesModule,
     AccountsModule,

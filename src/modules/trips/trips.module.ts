@@ -6,6 +6,7 @@ import Trips from './entities/trip.entity';
 import { LocationsModule } from 'modules/locations/locations.module';
 import { TypesModule } from 'modules/types/types.module';
 import { AccountsModule } from 'modules/accounts/accounts.module';
+import { RequestJoinTripModule } from 'modules/request-join-trip/request-join-trip.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AccountsModule } from 'modules/accounts/accounts.module';
     forwardRef(() => LocationsModule),
     forwardRef(() => TypesModule),
     forwardRef(() => AccountsModule),
+    forwardRef(() => RequestJoinTripModule),
   ],
   providers: [TripsResolver, TripsService],
   exports: [TripsService],

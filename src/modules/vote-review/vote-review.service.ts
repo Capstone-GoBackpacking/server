@@ -10,6 +10,18 @@ export class VoteReviewService {
     private readonly voteReviewModel: typeof VoteReview,
   ) {}
 
+  async findByTwoForeign(
+    reviewId: string,
+    accountId: string,
+  ): Promise<VoteReview | null> {
+    return await this.voteReviewModel.findOne({
+      where: {
+        reviewId,
+        accountId,
+      },
+    });
+  }
+
   async findsByReview(reviewId: string): Promise<VoteReview[]> {
     return await this.voteReviewModel.findAll({
       where: {
