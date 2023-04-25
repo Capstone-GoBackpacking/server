@@ -16,10 +16,10 @@ import { AuthResolver } from './auth.resolver';
     PassportModule,
     JwtModule.register({
       secret: jwtConfigs.secret,
-      signOptions: { expiresIn: jwtConfigs.expireTime },
+      // signOptions: { expiresIn: jwtConfigs.expireTime },
     }),
   ],
   providers: [AuthService, AuthResolver, LocalStrategy, JwtStrategy],
   exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}
