@@ -3,6 +3,7 @@ import Accounts from 'modules/accounts/entities/account.entity';
 import Comments from 'modules/comments/entities/comment.entity';
 import PostTag from 'modules/post-tag/entities/post-tag.entity';
 import Tags from 'modules/tags/entities/tag.entity';
+import Trips from 'modules/trips/entities/trip.entity';
 import {
   Table,
   Model,
@@ -13,7 +14,7 @@ import {
   AllowNull,
   BelongsTo,
   BelongsToMany,
-  HasMany
+  HasMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -23,21 +24,21 @@ export default class Posts extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(30)
+    type: DataType.STRING(30),
   })
   title: string;
 
   @Field({ nullable: true })
   @AllowNull(true)
   @Column({
-    type: DataType.STRING(500)
+    type: DataType.STRING(500),
   })
   content?: string;
 
@@ -45,7 +46,7 @@ export default class Posts extends Model {
   @AllowNull(false)
   @Column({
     type: DataType.DATE,
-    defaultValue: DataType.NOW
+    defaultValue: DataType.NOW,
   })
   time: string;
 
@@ -66,4 +67,14 @@ export default class Posts extends Model {
   @Field(() => [Comments])
   @HasMany(() => Comments)
   comments: Comments[];
+
+  @Field()
+  @AllowNull(false)
+  @ForeignKey(() => Trips)
+  @Column
+  tripId: string;
+
+  @Field(() => Trips)
+  @BelongsTo(() => Trips)
+  trip: Trips;
 }

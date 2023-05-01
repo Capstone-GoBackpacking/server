@@ -64,6 +64,8 @@ type Posts {
   author: Accounts!
   tags: [Tags!]!
   comments: [Comments!]!
+  tripId: String!
+  trip: Trips!
 }
 
 type PostTag {
@@ -160,6 +162,7 @@ type Trips {
   joinedMember: [Accounts!]!
   thumbnail: String
   distance: Float!
+  posts: [Posts!]!
   targetJoined: Boolean!
 }
 
@@ -205,6 +208,7 @@ type Query {
   reviewsOfLocation(locationId: String!): [Reviews!]!
   reviews: [Reviews!]!
   voteReviews: [VoteReview!]!
+  posts: [Posts!]!
   isJoined(input: String!): Boolean!
   requestJoinTrips: [RequestJoinTrip!]!
   genders: [Genders!]!
@@ -212,7 +216,6 @@ type Query {
   accountHobbies: [AccountHobby!]!
   tags: [Tags!]!
   locationTags: [LocationTag!]!
-  posts: [Posts!]!
   postTags: [PostTag!]!
   comments: [Comments!]!
   replies: [Replies!]!
@@ -225,8 +228,9 @@ type Mutation {
   createReview(input: CreateReviewInput!): Reviews!
   unVoting(id: String!): String!
   voting(input: CreateVoteReviewInput!): VoteReview!
-  createLocationImages(input: CreateLocationImageInput!): LocationImages!
+  createPost(input: CreatePostInput!): Posts!
   joinTrip(input: String!): RequestJoinTrip!
+  createLocationImages(input: CreateLocationImageInput!): LocationImages!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
 }
@@ -261,6 +265,12 @@ input CreateReviewInput {
 input CreateVoteReviewInput {
   reviewId: String!
   status: String!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+  tripId: String!
 }
 
 input CreateLocationImageInput {

@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, ID, Float } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
+import Posts from 'modules/posts/entities/post.entity';
 import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-trip.entity';
 import Types from 'modules/types/entities/type.entity';
 import { HasManyAddAssociationMixin } from 'sequelize';
@@ -14,6 +15,7 @@ import {
   BelongsTo,
   DataType,
   BelongsToMany,
+  HasMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -122,6 +124,10 @@ export default class Trips extends Model {
     type: DataType.FLOAT,
   })
   distance: number;
+
+  @Field(() => [Posts])
+  @HasMany(() => Posts)
+  posts: Posts[];
 
   addJoinedMember: HasManyAddAssociationMixin<Accounts, string>;
 }

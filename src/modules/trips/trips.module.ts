@@ -7,6 +7,7 @@ import { LocationsModule } from 'modules/locations/locations.module';
 import { TypesModule } from 'modules/types/types.module';
 import { AccountsModule } from 'modules/accounts/accounts.module';
 import { RequestJoinTripModule } from 'modules/request-join-trip/request-join-trip.module';
+import { PostsModule } from 'modules/posts/posts.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { RequestJoinTripModule } from 'modules/request-join-trip/request-join-tr
     forwardRef(() => TypesModule),
     forwardRef(() => AccountsModule),
     forwardRef(() => RequestJoinTripModule),
+    forwardRef(() => PostsModule),
   ],
   providers: [TripsResolver, TripsService],
   exports: [TripsService],
