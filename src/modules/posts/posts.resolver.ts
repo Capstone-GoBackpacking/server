@@ -16,6 +16,8 @@ import { TripsService } from 'modules/trips/trips.service';
 import { AccountsService } from 'modules/accounts/accounts.service';
 import Trips from 'modules/trips/entities/trip.entity';
 import Accounts from 'modules/accounts/entities/account.entity';
+import Comments from 'modules/comments/entities/comment.entity';
+import { CommentsService } from 'modules/comments/comments.service';
 
 @Resolver(() => Posts)
 export class PostsResolver {
@@ -23,7 +25,18 @@ export class PostsResolver {
     private readonly postsService: PostsService,
     private readonly tripsService: TripsService,
     private readonly accountsService: AccountsService,
+    private readonly commentsService: CommentsService,
   ) {}
+
+  @ResolveField('comments', () => [Comments])
+  async getComments(@Parent() post: Posts) {
+    return await this.commentsService.findsByPost(post.id);
+  }
+
+  @Query(() => [Posts])
+  async postsOfTrip(@Args('input') input: string) {
+    return await this.postsService.findsByTrip(input);
+  }
 
   @ResolveField('trip', () => Trips)
   async getTrip(@Parent() post: Posts) {

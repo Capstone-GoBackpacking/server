@@ -11,7 +11,7 @@ import {
   ForeignKey,
   AllowNull,
   BelongsTo,
-  HasMany
+  HasMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -21,14 +21,14 @@ export default class Comments extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @AllowNull(false)
   @Column({
-    type: DataType.STRING(500)
+    type: DataType.STRING(500),
   })
   content: string;
 
@@ -36,7 +36,7 @@ export default class Comments extends Model {
   @AllowNull(false)
   @Column({
     type: DataType.DATE,
-    defaultValue: DataType.NOW
+    defaultValue: DataType.NOW,
   })
   time: string;
 

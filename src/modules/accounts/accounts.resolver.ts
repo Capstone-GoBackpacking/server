@@ -11,6 +11,8 @@ import VoteReview from 'modules/vote-review/entities/vote-review.entity';
 import { VoteReviewService } from 'modules/vote-review/vote-review.service';
 import Posts from 'modules/posts/entities/post.entity';
 import { PostsService } from 'modules/posts/posts.service';
+import Comments from 'modules/comments/entities/comment.entity';
+import { CommentsService } from 'modules/comments/comments.service';
 
 @Resolver(() => Accounts)
 export class AccountsResolver {
@@ -21,7 +23,13 @@ export class AccountsResolver {
     private readonly reviewsService: ReviewsService,
     private readonly voteReviewService: VoteReviewService,
     private readonly postsService: PostsService,
+    private readonly commentsService: CommentsService,
   ) {}
+
+  @ResolveField('comments', () => [Comments])
+  async getComments(@Parent() account: Accounts) {
+    return await this.commentsService.findsByAuthor(account.id);
+  }
 
   @ResolveField('posts', () => [Posts])
   async getPosts(@Parent() account: Accounts) {

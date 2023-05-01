@@ -5,12 +5,14 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import Posts from './entities/post.entity';
 import { TripsModule } from 'modules/trips/trips.module';
 import { AccountsModule } from 'modules/accounts/accounts.module';
+import { CommentsModule } from 'modules/comments/comments.module';
 
 @Module({
   imports: [
     SequelizeModule.forFeature([Posts]),
     forwardRef(() => TripsModule),
     forwardRef(() => AccountsModule),
+    forwardRef(() => CommentsModule),
   ],
   providers: [PostsResolver, PostsService],
   exports: [PostsService],

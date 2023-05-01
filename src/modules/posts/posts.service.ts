@@ -9,6 +9,10 @@ export class PostsService {
     private readonly postModel: typeof Posts,
   ) {}
 
+  async findById(id: string): Promise<Posts | null> {
+    return await this.postModel.findByPk(id);
+  }
+
   async findsByTrip(tripId: string): Promise<Posts[]> {
     return await this.postModel.findAll({
       where: {
@@ -25,16 +29,8 @@ export class PostsService {
     });
   }
 
-  async create({
-    title,
-    content,
-    authorId,
-    tripId,
-  }: {
-    [key: string]: string;
-  }) {
+  async create({ content, authorId, tripId }: { [key: string]: string }) {
     return await this.postModel.create({
-      title,
       content,
       authorId,
       tripId,

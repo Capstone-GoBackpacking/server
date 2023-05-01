@@ -28,13 +28,6 @@ export default class Posts extends Model {
   })
   id: string;
 
-  @Field()
-  @AllowNull(false)
-  @Column({
-    type: DataType.STRING(30),
-  })
-  title: string;
-
   @Field({ nullable: true })
   @AllowNull(true)
   @Column({

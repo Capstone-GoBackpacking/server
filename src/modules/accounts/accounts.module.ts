@@ -8,6 +8,7 @@ import { ProfilesModule } from 'modules/profiles/profiles.module';
 import { ReviewsModule } from 'modules/reviews/reviews.module';
 import { VoteReviewModule } from 'modules/vote-review/vote-review.module';
 import { PostsModule } from 'modules/posts/posts.module';
+import { CommentsModule } from 'modules/comments/comments.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PostsModule } from 'modules/posts/posts.module';
     forwardRef(() => ReviewsModule),
     forwardRef(() => VoteReviewModule),
     forwardRef(() => PostsModule),
+    forwardRef(() => CommentsModule),
   ],
   providers: [AccountsResolver, AccountsService],
   exports: [AccountsService],
