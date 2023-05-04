@@ -26,6 +26,7 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
 import { LocationImagesModule } from './modules/location-images/location-images.module';
 import { VoteReviewModule } from './modules/vote-review/vote-review.module';
 import { TagHobbyModule } from './modules/tag-hobby/tag-hobby.module';
+import { TagTypeModule } from './modules/tag-type/tag-type.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -59,6 +60,7 @@ import SequelizeConfig from './configs/sequelize.config';
     LocationImagesModule,
     VoteReviewModule,
     TagHobbyModule,
+    TagTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,6 +8,7 @@ import { TypesModule } from 'modules/types/types.module';
 import { AccountsModule } from 'modules/accounts/accounts.module';
 import { RequestJoinTripModule } from 'modules/request-join-trip/request-join-trip.module';
 import { PostsModule } from 'modules/posts/posts.module';
+import { TagHobbyModule } from 'modules/tag-hobby/tag-hobby.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PostsModule } from 'modules/posts/posts.module';
     forwardRef(() => AccountsModule),
     forwardRef(() => RequestJoinTripModule),
     forwardRef(() => PostsModule),
+    forwardRef(() => TagHobbyModule),
   ],
   providers: [TripsResolver, TripsService],
   exports: [TripsService],

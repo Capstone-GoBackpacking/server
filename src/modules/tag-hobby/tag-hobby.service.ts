@@ -9,6 +9,15 @@ export class TagHobbyService {
     private readonly tagHobbyModel: typeof TagHobby,
   ) {}
 
+  async findByTagHobby(tagId: string, hobbyId: string) {
+    return await this.tagHobbyModel.findOne({
+      where: {
+        tagId,
+        hobbyId,
+      },
+    });
+  }
+
   async finds() {
     return await this.tagHobbyModel.findAll();
   }

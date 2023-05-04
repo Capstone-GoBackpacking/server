@@ -29,6 +29,7 @@ export class LocationsService {
         },
         include: {
           model: Tags,
+          as: 'tags',
         },
       })
       .then((res) => res?.tags);

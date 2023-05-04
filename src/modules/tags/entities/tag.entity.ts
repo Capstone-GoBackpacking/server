@@ -5,6 +5,8 @@ import Locations from 'modules/locations/entities/location.entity';
 import PostTag from 'modules/post-tag/entities/post-tag.entity';
 import Posts from 'modules/posts/entities/post.entity';
 import TagHobby from 'modules/tag-hobby/entities/tag-hobby.entity';
+import TagType from 'modules/tag-type/entities/tag-type.entity';
+import Types from 'modules/types/entities/type.entity';
 import {
   Table,
   Model,
@@ -44,4 +46,8 @@ export default class Tags extends Model {
   @Field(() => [Hobbies])
   @BelongsToMany(() => Hobbies, () => TagHobby)
   hobbies: Hobbies[];
+
+  @Field(() => [Types])
+  @BelongsToMany(() => Types, () => TagType)
+  types: Types[];
 }

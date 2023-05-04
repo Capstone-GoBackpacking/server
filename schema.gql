@@ -74,11 +74,18 @@ type RequestJoinTrip {
   verify: Boolean!
 }
 
+type TagType {
+  id: ID!
+  tagId: String!
+  typeId: String!
+}
+
 type Types {
   id: ID!
   name: String!
   icon: String
   trips: [Trips!]!
+  tags: [Tags!]!
 }
 
 type Trips {
@@ -158,6 +165,8 @@ type Tags {
   locations: [Locations!]!
   posts: [Posts!]!
   hobbies: [Hobbies!]!
+  types: [Types!]!
+  trips: [Types!]!
 }
 
 type TagHobby {
@@ -220,6 +229,7 @@ type Query {
   isJoined(input: String!): Boolean!
   requestJoinTrips: [RequestJoinTrip!]!
   comments: [Comments!]!
+  tagHobbies: [TagHobby!]!
   genders: [Genders!]!
   hobbies: [Hobbies!]!
   accountHobbies: [AccountHobby!]!
@@ -228,12 +238,13 @@ type Query {
   postTags: [PostTag!]!
   replies: [Replies!]!
   currentAccount: Accounts!
-  tagHobbies: [TagHobby!]!
+  tagTypes: [TagType!]!
 }
 
 type Mutation {
   updateAccount(input: UpdateAccountInput!): Accounts!
   asignHobbies(input: AsignHobbiesInput!): Accounts!
+  generateTemplate(input: GenerateTemplateInput!): [Locations!]!
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   createReview(input: CreateReviewInput!): Reviews!
@@ -254,6 +265,12 @@ input UpdateAccountInput {
 
 input AsignHobbiesInput {
   hobbies: [String!]!
+}
+
+input GenerateTemplateInput {
+  currentLocation: String!
+  expectDistance: Float!
+  type: String!
 }
 
 input CreateTripInput {

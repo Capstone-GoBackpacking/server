@@ -22,6 +22,8 @@ import { distanceCal } from 'common/utils/distance';
 import { RequestJoinTripService } from 'modules/request-join-trip/request-join-trip.service';
 import Posts from 'modules/posts/entities/post.entity';
 import { PostsService } from 'modules/posts/posts.service';
+import { GenerateTemplateInput } from './dto/generate-template.input';
+import { TagHobbyService } from 'modules/tag-hobby/tag-hobby.service';
 
 @Resolver(() => Trips)
 export class TripsResolver {
@@ -32,7 +34,72 @@ export class TripsResolver {
     private readonly accountsService: AccountsService,
     private readonly requestJoinTripService: RequestJoinTripService,
     private readonly postsService: PostsService,
+    private readonly tagHobbyService: TagHobbyService,
   ) {}
+
+  @Mutation(() => [Locations])
+  @UseGuards(JwtAuthGuard)
+  async generateTemplate(
+    @Args('input') input: GenerateTemplateInput,
+    @Context() ctx: any,
+  ) {
+    const { id } = ctx.req.user;
+    const { currentLocation, expectDistance, type } = input;
+    const location = await this.locationsService.findById(currentLocation);
+    if (location) {
+      const locations = await this.locationsService.finds();
+      const hobbies = await this.accountsService.findsMyHobbies(id);
+      const matchLocations = (
+        await Promise.all(
+          locations.map(async (lct) => {
+            if (location.id === lct.id) {
+              return false;
+            }
+            const distance = distanceCal(
+              Number(location.lat),
+              Number(location.lng),
+              Number(lct.lat),
+              Number(lct.lng),
+            );
+            let match = false;
+            const tags = await this.locationsService.findsTag(lct.id);
+            const tagsOfType = await this.typesService.findTags(type);
+            const matchTags = tags?.filter((tag) =>
+              tagsOfType?.some((tagOfType) => tagOfType.id === tag.id),
+            );
+            if (matchTags && hobbies) {
+              match = await (async () => {
+                for (const tag of matchTags) {
+                  for (const hobby of hobbies) {
+                    if (
+                      await this.tagHobbyService.findByTagHobby(
+                        tag.id,
+                        hobby.id,
+                      )
+                    ) {
+                      return true;
+                    }
+                  }
+                }
+                return false;
+              })();
+            }
+            return {
+              ...lct,
+              match: match && distance <= expectDistance,
+            };
+          }),
+        )
+      )
+        .filter((location: any) => location.match)
+        .map((location: any) => {
+          delete location.dataValues.match;
+          return location.dataValues;
+        });
+
+      return matchLocations;
+    }
+  }
 
   @ResolveField('posts', () => [Posts])
   async getPosts(@Parent() trip: Trips) {
