@@ -1,8 +1,10 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import Hobbies from 'modules/hobbies/entities/hobby.entity';
 import LocationTag from 'modules/location-tag/entities/location-tag.entity';
 import Locations from 'modules/locations/entities/location.entity';
 import PostTag from 'modules/post-tag/entities/post-tag.entity';
 import Posts from 'modules/posts/entities/post.entity';
+import TagHobby from 'modules/tag-hobby/entities/tag-hobby.entity';
 import {
   Table,
   Model,
@@ -10,7 +12,7 @@ import {
   Column,
   Unique,
   DataType,
-  BelongsToMany
+  BelongsToMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -20,14 +22,14 @@ export default class Tags extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
   @Field()
   @Unique(true)
   @Column({
-    type: DataType.STRING(20)
+    type: DataType.STRING(20),
   })
   name: string;
 
@@ -38,4 +40,8 @@ export default class Tags extends Model {
   @Field(() => [Posts])
   @BelongsToMany(() => Posts, () => PostTag)
   posts: Posts[];
+
+  @Field(() => [Hobbies])
+  @BelongsToMany(() => Hobbies, () => TagHobby)
+  hobbies: Hobbies[];
 }

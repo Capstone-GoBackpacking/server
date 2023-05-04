@@ -28,12 +28,6 @@ type AccountHobby {
   hobbyId: String!
 }
 
-type Hobbies {
-  id: ID!
-  name: String!
-  account: [Accounts!]!
-}
-
 type Replies {
   id: ID!
   content: String!
@@ -55,6 +49,12 @@ type Comments {
   replies: [Replies!]!
 }
 
+type PostTag {
+  id: ID!
+  tagId: String!
+  postId: String!
+}
+
 type Posts {
   id: ID!
   content: String
@@ -67,23 +67,41 @@ type Posts {
   trip: Trips!
 }
 
-type PostTag {
+type RequestJoinTrip {
   id: ID!
-  tagId: String!
-  postId: String!
+  tripId: String!
+  memberId: String!
+  verify: Boolean!
 }
 
-type Tags {
+type Types {
   id: ID!
   name: String!
-  locations: [Locations!]!
-  posts: [Posts!]!
+  icon: String
+  trips: [Trips!]!
 }
 
-type LocationTag {
+type Trips {
   id: ID!
-  locationId: String!
-  tagId: String!
+  name: String!
+  description: String
+  timeEnd: String!
+  timeStart: String!
+  slot: Int!
+  joined: Int!
+  locationStartId: String!
+  locationStart: Locations!
+  locationEndId: String!
+  locationEnd: Locations!
+  hostId: String!
+  host: Accounts!
+  typeId: String!
+  type: Types!
+  joinedMember: [Accounts!]!
+  thumbnail: String
+  distance: Float!
+  posts: [Posts!]!
+  targetJoined: Boolean!
 }
 
 type VoteReview {
@@ -128,41 +146,31 @@ type Locations {
   images: [LocationImages!]!
 }
 
-type RequestJoinTrip {
+type LocationTag {
   id: ID!
-  tripId: String!
-  memberId: String!
-  verify: Boolean!
+  locationId: String!
+  tagId: String!
 }
 
-type Types {
+type Tags {
   id: ID!
   name: String!
-  icon: String
-  trips: [Trips!]!
-}
-
-type Trips {
-  id: ID!
-  name: String!
-  description: String
-  timeEnd: String!
-  timeStart: String!
-  slot: Int!
-  joined: Int!
-  locationStartId: String!
-  locationStart: Locations!
-  locationEndId: String!
-  locationEnd: Locations!
-  hostId: String!
-  host: Accounts!
-  typeId: String!
-  type: Types!
-  joinedMember: [Accounts!]!
-  thumbnail: String
-  distance: Float!
+  locations: [Locations!]!
   posts: [Posts!]!
-  targetJoined: Boolean!
+  hobbies: [Hobbies!]!
+}
+
+type TagHobby {
+  id: ID!
+  tagId: String!
+  hobbyId: String!
+}
+
+type Hobbies {
+  id: ID!
+  name: String!
+  account: [Accounts!]!
+  tags: [Tags!]!
 }
 
 type Accounts {
@@ -220,9 +228,12 @@ type Query {
   postTags: [PostTag!]!
   replies: [Replies!]!
   currentAccount: Accounts!
+  tagHobbies: [TagHobby!]!
 }
 
 type Mutation {
+  updateAccount(input: UpdateAccountInput!): Accounts!
+  asignHobbies(input: AsignHobbiesInput!): Accounts!
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   createReview(input: CreateReviewInput!): Reviews!
@@ -234,6 +245,15 @@ type Mutation {
   createLocationImages(input: CreateLocationImageInput!): LocationImages!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
+}
+
+input UpdateAccountInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+}
+
+input AsignHobbiesInput {
+  hobbies: [String!]!
 }
 
 input CreateTripInput {

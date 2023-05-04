@@ -25,7 +25,10 @@ import RequestJoinTrip from 'modules/request-join-trip/entities/request-join-tri
 import Posts from 'modules/posts/entities/post.entity';
 import Comments from 'modules/comments/entities/comment.entity';
 import Replies from 'modules/replies/entities/reply.entity';
-import { HasOneCreateAssociationMixin } from 'sequelize';
+import {
+  HasOneCreateAssociationMixin,
+  HasManyAddAssociationsMixin,
+} from 'sequelize';
 import Reviews from 'modules/reviews/entities/review.entity';
 import VoteReview from 'modules/vote-review/entities/vote-review.entity';
 
@@ -109,6 +112,7 @@ export default class Accounts extends Model {
   voteReviews: VoteReview[];
 
   createProfile: HasOneCreateAssociationMixin<Profiles>;
+  addHobbies: HasManyAddAssociationsMixin<Hobbies, string>;
 
   @BeforeCreate
   static async hashPassword(instance: Accounts) {

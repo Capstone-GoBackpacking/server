@@ -1,4 +1,12 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Context,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { AccountsService } from './accounts.service';
 import Accounts from './entities/account.entity';
 import { TripsService } from 'modules/trips/trips.service';
@@ -13,6 +21,13 @@ import Posts from 'modules/posts/entities/post.entity';
 import { PostsService } from 'modules/posts/posts.service';
 import Comments from 'modules/comments/entities/comment.entity';
 import { CommentsService } from 'modules/comments/comments.service';
+import Hobbies from 'modules/hobbies/entities/hobby.entity';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'common/guards/jwt-auth.guard';
+import {
+  AsignHobbiesInput,
+  UpdateAccountInput,
+} from './dto/update-account.input';
 
 @Resolver(() => Accounts)
 export class AccountsResolver {
@@ -25,6 +40,11 @@ export class AccountsResolver {
     private readonly postsService: PostsService,
     private readonly commentsService: CommentsService,
   ) {}
+
+  @ResolveField('hobbies', () => [Hobbies])
+  async getHobbies(@Parent() account: Accounts) {
+    return await this.accountsService.findsMyHobbies(account.id);
+  }
 
   @ResolveField('comments', () => [Comments])
   async getComments(@Parent() account: Accounts) {
@@ -64,6 +84,26 @@ export class AccountsResolver {
   @ResolveField('trips', () => [Trips])
   async getTrips(@Parent() account: Accounts) {
     return await this.tripsService.findsByHost(account.id);
+  }
+
+  @Mutation(() => Accounts)
+  @UseGuards(JwtAuthGuard)
+  async updateAccount(
+    @Args('input') input: UpdateAccountInput,
+    @Context() ctx: any,
+  ) {
+    const { id } = ctx.req.user;
+    return await this.accountsService.update(id, input);
+  }
+
+  @Mutation(() => Accounts)
+  @UseGuards(JwtAuthGuard)
+  async asignHobbies(
+    @Args('input') input: AsignHobbiesInput,
+    @Context() ctx: any,
+  ) {
+    const { id } = ctx.req.user;
+    return await this.accountsService.asignHobbies(id, input.hobbies);
   }
 
   @Query(() => [Accounts])

@@ -1,6 +1,8 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import AccountHobby from 'modules/account-hobby/entities/account-hobby.entity';
 import Accounts from 'modules/accounts/entities/account.entity';
+import TagHobby from 'modules/tag-hobby/entities/tag-hobby.entity';
+import Tags from 'modules/tags/entities/tag.entity';
 import {
   Table,
   Model,
@@ -8,7 +10,7 @@ import {
   PrimaryKey,
   DataType,
   Unique,
-  BelongsToMany
+  BelongsToMany,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -18,7 +20,7 @@ export default class Hobbies extends Model {
   @PrimaryKey
   @Column({
     type: DataType.UUID,
-    defaultValue: DataType.UUIDV4
+    defaultValue: DataType.UUIDV4,
   })
   id: string;
 
@@ -32,4 +34,8 @@ export default class Hobbies extends Model {
   @Field(() => [Accounts])
   @BelongsToMany(() => Accounts, () => AccountHobby)
   account: Accounts[];
+
+  @Field(() => [Tags])
+  @BelongsToMany(() => Tags, () => TagHobby)
+  tags: Tags[];
 }

@@ -6,10 +6,10 @@ import Hobbies from './entities/hobby.entity';
 export class HobbiesService {
   constructor(
     @InjectModel(Hobbies)
-    private readonly hobbyModel: typeof Hobbies
-  ) { }
+    private readonly hobbyModel: typeof Hobbies,
+  ) {}
 
   async finds(): Promise<Hobbies[]> {
-    return await this.hobbyModel.findAll()
+    return await this.hobbyModel.findAll();
   }
 }
