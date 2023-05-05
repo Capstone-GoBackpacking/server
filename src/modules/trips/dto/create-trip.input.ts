@@ -1,4 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { EDesign } from 'common/types/enums';
 
 @InputType()
 export class CreateTripInput {
@@ -20,6 +21,8 @@ export class CreateTripInput {
   typeId: string;
   @Field({ nullable: true })
   thumbnail: string;
+  @Field({ nullable: true })
+  design: EDesign;
 }
 
 @InputType()

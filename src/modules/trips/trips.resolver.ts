@@ -24,6 +24,7 @@ import Posts from 'modules/posts/entities/post.entity';
 import { PostsService } from 'modules/posts/posts.service';
 import { GenerateTemplateInput } from './dto/generate-template.input';
 import { TagHobbyService } from 'modules/tag-hobby/tag-hobby.service';
+import { EDesign } from 'common/types/enums';
 
 @Resolver(() => Trips)
 export class TripsResolver {
@@ -37,7 +38,7 @@ export class TripsResolver {
     private readonly tagHobbyService: TagHobbyService,
   ) {}
 
-  @Mutation(() => [Locations])
+  @Mutation(() => [Trips])
   @UseGuards(JwtAuthGuard)
   async generateTemplate(
     @Args('input') input: GenerateTemplateInput,
@@ -97,7 +98,34 @@ export class TripsResolver {
           return location.dataValues;
         });
 
-      return matchLocations;
+      const results = matchLocations.map(async (lct) => {
+        const locationEndId = lct.id;
+        const tripName = `${location.name} - ${lct.name}`;
+        const distance = distanceCal(
+          Number(location.lat),
+          Number(location.lng),
+          Number(lct.lat),
+          Number(lct.lng),
+        );
+        const time = new Date();
+        const timeStart = time.toString();
+        time.setDate(time.getDate() + 1);
+        const timeEnd = time.toString();
+        return this.tripsService.build({
+          name: tripName,
+          timeStart,
+          timeEnd,
+          slot: 1,
+          locationEndId,
+          locationStartId: location.id,
+          hostId: id,
+          typeId: type,
+          distance,
+          design: EDesign.template,
+        });
+      });
+
+      return results;
     }
   }
 

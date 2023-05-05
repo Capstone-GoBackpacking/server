@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, ID, Float } from '@nestjs/graphql';
+import { EDesign } from 'common/types/enums';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Locations from 'modules/locations/entities/location.entity';
 import Posts from 'modules/posts/entities/post.entity';
@@ -124,6 +125,13 @@ export default class Trips extends Model {
     type: DataType.FLOAT,
   })
   distance: number;
+
+  @Field({ nullable: true })
+  @Column({
+    type: DataType.ENUM(...Object.values(EDesign)),
+    defaultValue: EDesign.build,
+  })
+  design: EDesign;
 
   @Field(() => [Posts])
   @HasMany(() => Posts)

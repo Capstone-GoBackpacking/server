@@ -107,6 +107,7 @@ type Trips {
   joinedMember: [Accounts!]!
   thumbnail: String
   distance: Float!
+  design: String
   posts: [Posts!]!
   targetJoined: Boolean!
 }
@@ -244,7 +245,7 @@ type Query {
 type Mutation {
   updateAccount(input: UpdateAccountInput!): Accounts!
   asignHobbies(input: AsignHobbiesInput!): Accounts!
-  generateTemplate(input: GenerateTemplateInput!): [Locations!]!
+  generateTemplate(input: GenerateTemplateInput!): [Trips!]!
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
   createReview(input: CreateReviewInput!): Reviews!
@@ -283,6 +284,7 @@ input CreateTripInput {
   locationEndId: String!
   typeId: String!
   thumbnail: String
+  design: String
 }
 
 input CreateLocationInput {

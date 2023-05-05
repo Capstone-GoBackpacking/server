@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import Trips from './entities/trip.entity';
 import { Op } from 'sequelize';
 import Accounts from 'modules/accounts/entities/account.entity';
+import { EDesign } from 'common/types/enums';
 
 interface ICreate {
   name: string;
@@ -15,7 +16,8 @@ interface ICreate {
   hostId: string;
   typeId: string;
   distance: number;
-  thumbnail: string;
+  thumbnail?: string;
+  design?: EDesign;
 }
 
 @Injectable()
@@ -76,6 +78,36 @@ export class TripsService {
     });
   }
 
+  async build({
+    name,
+    description,
+    timeEnd,
+    timeStart,
+    slot,
+    locationEndId,
+    locationStartId,
+    hostId,
+    typeId,
+    distance,
+    thumbnail,
+    design,
+  }: ICreate): Promise<Trips> {
+    return this.tripModel.build({
+      name,
+      description,
+      timeEnd,
+      timeStart,
+      slot,
+      locationEndId,
+      locationStartId,
+      hostId,
+      typeId,
+      distance,
+      thumbnail,
+      design,
+    });
+  }
+
   async create({
     name,
     description,
@@ -88,6 +120,7 @@ export class TripsService {
     typeId,
     distance,
     thumbnail,
+    design,
   }: ICreate): Promise<Trips> {
     return await this.tripModel.create({
       name,
@@ -101,6 +134,7 @@ export class TripsService {
       typeId,
       distance,
       thumbnail,
+      design,
     });
   }
 
