@@ -16,7 +16,7 @@ import Types from 'modules/types/entities/type.entity';
 import { TypesService } from 'modules/types/types.service';
 import Accounts from 'modules/accounts/entities/account.entity';
 import { AccountsService } from 'modules/accounts/accounts.service';
-import { UseGuards } from '@nestjs/common';
+import { HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth.guard';
 import { distanceCal } from 'common/utils/distance';
 import { RequestJoinTripService } from 'modules/request-join-trip/request-join-trip.service';
@@ -38,6 +38,17 @@ export class TripsResolver {
     private readonly tagHobbyService: TagHobbyService,
   ) {}
 
+  @Query(() => Boolean)
+  @UseGuards(JwtAuthGuard)
+  async isHost(
+    @Args('input') input: string,
+    @Context() ctx: any,
+  ): Promise<boolean> {
+    const { id } = ctx.req.user;
+    const trip = await this.tripsService.findById(input);
+    return id === trip?.hostId;
+  }
+
   @Mutation(() => [Trips])
   @UseGuards(JwtAuthGuard)
   async generateTemplate(
@@ -46,6 +57,9 @@ export class TripsResolver {
   ) {
     const { id } = ctx.req.user;
     const { currentLocation, expectDistance, type } = input;
+    if (!currentLocation || !expectDistance || !type) {
+      throw new HttpException('Invalid request', HttpStatus.BAD_REQUEST);
+    }
     const location = await this.locationsService.findById(currentLocation);
     if (location) {
       const locations = await this.locationsService.finds();
@@ -132,6 +146,13 @@ export class TripsResolver {
   @ResolveField('posts', () => [Posts])
   async getPosts(@Parent() trip: Trips) {
     return await this.postsService.findsByTrip(trip.id);
+  }
+
+  @ResolveField('isHost', () => Boolean)
+  @UseGuards(JwtAuthGuard)
+  async targetHost(@Parent() trip: Trips, @Context() ctx: any) {
+    const { id } = ctx.req.user;
+    return id === trip.hostId;
   }
 
   @ResolveField('targetJoined', () => Boolean)

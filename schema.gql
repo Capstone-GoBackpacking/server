@@ -109,6 +109,7 @@ type Trips {
   distance: Float!
   design: String
   posts: [Posts!]!
+  isHost: Boolean!
   targetJoined: Boolean!
 }
 
@@ -216,6 +217,7 @@ type Query {
   roles: [Roles!]!
   getAccountById(input: String!): Accounts!
   accounts: [Accounts!]!
+  isHost(input: String!): Boolean!
   getTripById(id: String!): Trips!
   trips: [Trips!]!
   getLocationById(id: String!): Locations!
