@@ -11,6 +11,14 @@ export class AccountsService {
     private readonly accountModel: typeof Accounts,
   ) {}
 
+  async deleteById(accountId: string) {
+    await this.accountModel.destroy({
+      where: {
+        id: accountId,
+      },
+    });
+  }
+
   async findsMyHobbies(accountId: string) {
     return await this.accountModel
       .findOne({

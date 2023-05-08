@@ -9,6 +9,7 @@ import { ReviewsModule } from 'modules/reviews/reviews.module';
 import { VoteReviewModule } from 'modules/vote-review/vote-review.module';
 import { PostsModule } from 'modules/posts/posts.module';
 import { CommentsModule } from 'modules/comments/comments.module';
+import { AccountsController } from './accounts.controller';
 
 @Module({
   imports: [
@@ -22,5 +23,6 @@ import { CommentsModule } from 'modules/comments/comments.module';
   ],
   providers: [AccountsResolver, AccountsService],
   exports: [AccountsService],
+  controllers: [AccountsController],
 })
 export class AccountsModule {}

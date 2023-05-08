@@ -17,6 +17,19 @@ export class ProfilesService {
     });
   }
 
+  async update(accountId: string, data: any) {
+    return await this.profileModel.update(
+      {
+        ...data,
+      },
+      {
+        where: {
+          accountId,
+        },
+      },
+    );
+  }
+
   async finds(): Promise<Profiles[]> {
     return await this.profileModel.findAll();
   }

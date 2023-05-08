@@ -264,6 +264,13 @@ type Mutation {
 input UpdateAccountInput {
   """Example field (placeholder)"""
   exampleField: Int
+  email: String
+  password: String
+  firstName: String
+  lastName: String
+  birthday: String
+  address: String
+  avatar: String
 }
 
 input AsignHobbiesInput {
