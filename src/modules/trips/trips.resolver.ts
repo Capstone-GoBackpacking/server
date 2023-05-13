@@ -187,6 +187,11 @@ export class TripsResolver {
     return await this.locationsService.findById(trip.locationStartId);
   }
 
+  @Query(() => [Trips])
+  async tripsOfHost(@Args('input') input: string) {
+    return await this.tripsService.findsByHost(input);
+  }
+
   @Mutation(() => Trips)
   @UseGuards(JwtAuthGuard)
   async createTrip(@Args('input') input: CreateTripInput, @Context() ctx: any) {

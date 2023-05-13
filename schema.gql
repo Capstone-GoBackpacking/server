@@ -140,6 +140,12 @@ type LocationImages {
   location: Locations!
 }
 
+type Favorites {
+  id: ID!
+  accountId: String!
+  locationId: String!
+}
+
 type Locations {
   id: ID!
   name: String!
@@ -150,6 +156,7 @@ type Locations {
   lat: String!
   thumbnail: String
   tags: [Tags!]!
+  favorites: [Accounts!]!
   trips: [Trips!]!
   reviews: [Reviews!]!
   images: [LocationImages!]!
@@ -194,6 +201,7 @@ type Accounts {
   profile: Profiles!
   hobbies: [Hobbies!]!
   joinedTrips: [Trips!]!
+  favorites: [Locations!]!
   posts: [Posts!]!
   comments: [Comments!]!
   replies: [Replies!]!
@@ -216,8 +224,10 @@ type LoginResponseDTO {
 type Query {
   roles: [Roles!]!
   getAccountById(input: String!): Accounts!
+  account(input: String!): Accounts!
   accounts: [Accounts!]!
   isHost(input: String!): Boolean!
+  tripsOfHost(input: String!): [Trips!]!
   getTripById(id: String!): Trips!
   trips: [Trips!]!
   getLocationById(id: String!): Locations!
@@ -259,6 +269,7 @@ type Mutation {
   createLocationImages(input: CreateLocationImageInput!): LocationImages!
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
+  favoriting(input: String!): Favorites!
 }
 
 input UpdateAccountInput {
@@ -274,6 +285,7 @@ input UpdateAccountInput {
 }
 
 input AsignHobbiesInput {
+  id: String!
   hobbies: [String!]!
 }
 

@@ -86,6 +86,11 @@ export class AccountsResolver {
     return await this.tripsService.findsByHost(account.id);
   }
 
+  @Query(() => Accounts)
+  async account(@Args('input') input: string) {
+    return await this.accountsService.findById(input);
+  }
+
   @Mutation(() => Accounts)
   @UseGuards(JwtAuthGuard)
   async updateAccount(
@@ -97,13 +102,8 @@ export class AccountsResolver {
   }
 
   @Mutation(() => Accounts)
-  @UseGuards(JwtAuthGuard)
-  async asignHobbies(
-    @Args('input') input: AsignHobbiesInput,
-    @Context() ctx: any,
-  ) {
-    const { id } = ctx.req.user;
-    return await this.accountsService.asignHobbies(id, input.hobbies);
+  async asignHobbies(@Args('input') input: AsignHobbiesInput) {
+    return await this.accountsService.asignHobbies(input.id, input.hobbies);
   }
 
   @Query(() => [Accounts])

@@ -21,6 +21,8 @@ export class UpdateAccountInput extends PartialType(CreateAccountInput) {
 
 @InputType()
 export class AsignHobbiesInput {
+  @Field()
+  id: string;
   @Field(() => [String])
   hobbies: string[];
 }

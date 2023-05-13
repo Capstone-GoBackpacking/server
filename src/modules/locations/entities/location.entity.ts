@@ -16,6 +16,8 @@ import { HasManyAddAssociationsMixin } from 'sequelize';
 import Trips from 'modules/trips/entities/trip.entity';
 import Reviews from 'modules/reviews/entities/review.entity';
 import LocationImages from 'modules/location-images/entities/location-image.entity';
+import Accounts from 'modules/accounts/entities/account.entity';
+import Favorites from 'modules/favorites/entities/favorite.entity';
 
 @ObjectType()
 @Table({ tableName: 'Locations', timestamps: false })
@@ -81,6 +83,10 @@ export default class Locations extends Model {
   @Field(() => [Tags])
   @BelongsToMany(() => Tags, () => LocationTag)
   tags: Tags[];
+
+  @Field(() => [Accounts])
+  @BelongsToMany(() => Accounts, () => Favorites)
+  favorites: Accounts[];
 
   @Field(() => [Trips])
   @HasMany(() => Trips)

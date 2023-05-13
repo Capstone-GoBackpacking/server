@@ -31,6 +31,8 @@ import {
 } from 'sequelize';
 import Reviews from 'modules/reviews/entities/review.entity';
 import VoteReview from 'modules/vote-review/entities/vote-review.entity';
+import Locations from 'modules/locations/entities/location.entity';
+import Favorites from 'modules/favorites/entities/favorite.entity';
 
 @ObjectType()
 @Table({ tableName: 'Accounts', timestamps: false })
@@ -86,6 +88,10 @@ export default class Accounts extends Model {
   @Field(() => [Trips])
   @BelongsToMany(() => Trips, () => RequestJoinTrip)
   joinedTrips: Trips[];
+
+  @Field(() => [Locations])
+  @BelongsToMany(() => Locations, () => Favorites)
+  favorites: Locations[];
 
   @Field(() => [Posts])
   @HasMany(() => Posts)
