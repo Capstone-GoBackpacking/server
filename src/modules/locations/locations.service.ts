@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import Locations from './entities/location.entity';
 import { EStatus } from 'common/types/enums';
 import Tags from 'modules/tags/entities/tag.entity';
+import { Op } from 'sequelize';
 
 interface ICreate {
   name: string;
@@ -35,6 +36,21 @@ export class LocationsService {
       return 'Update Success!';
     }
     return null;
+  }
+
+  async search(options: any) {
+    const { name = '', tagIds = [] } = options;
+    return await this.locationModel.findAll({
+      where: {
+        name: { [Op.like]: `%${name}%` },
+      },
+      include: {
+        model: Tags,
+        where: {
+          id: tagIds,
+        },
+      },
+    });
   }
 
   async findsTag(locationId: string) {

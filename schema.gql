@@ -231,6 +231,7 @@ type Query {
   tripsOfHost(input: String!): [Trips!]!
   getTripById(id: String!): Trips!
   trips: [Trips!]!
+  searchLocation(input: SearchLocationInput!): [Locations!]!
   getLocationById(id: String!): Locations!
   locations: [Locations!]!
   types: [Types!]!
@@ -254,6 +255,11 @@ type Query {
   currentAccount: Accounts!
   tagTypes: [TagType!]!
   isFavoriting(input: String!): Boolean!
+}
+
+input SearchLocationInput {
+  name: String
+  tagIds: [String!]
 }
 
 type Mutation {

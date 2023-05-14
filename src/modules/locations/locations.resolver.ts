@@ -16,6 +16,7 @@ import { ReviewsService } from 'modules/reviews/reviews.service';
 import Reviews from 'modules/reviews/entities/review.entity';
 import LocationImages from 'modules/location-images/entities/location-image.entity';
 import { LocationImagesService } from 'modules/location-images/location-images.service';
+import { SearchLocationInput } from './dto/search-location.input';
 
 @Resolver(() => Locations)
 export class LocationsResolver {
@@ -25,6 +26,11 @@ export class LocationsResolver {
     private readonly reviewsService: ReviewsService,
     private readonly locationImagesService: LocationImagesService,
   ) {}
+
+  @Query(() => [Locations])
+  async searchLocation(@Args('input') input: SearchLocationInput) {
+    return this.locationsService.search(input);
+  }
 
   @ResolveField('images', () => [LocationImages])
   async getImages(@Parent() location: Locations) {
