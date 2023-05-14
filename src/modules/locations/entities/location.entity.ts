@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 import LocationTag from 'modules/location-tag/entities/location-tag.entity';
 import Tags from 'modules/tags/entities/tag.entity';
 import {
@@ -99,6 +99,13 @@ export default class Locations extends Model {
   @Field(() => [LocationImages])
   @HasMany(() => LocationImages)
   images: LocationImages[];
+
+  @Field(() => Int)
+  @Column({
+    type: DataType.BIGINT.UNSIGNED,
+    defaultValue: 0,
+  })
+  favoriteNumber: number;
 
   addTags: HasManyAddAssociationsMixin<Tags, string>;
 }

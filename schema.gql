@@ -160,6 +160,7 @@ type Locations {
   trips: [Trips!]!
   reviews: [Reviews!]!
   images: [LocationImages!]!
+  favoriteNumber: Int!
 }
 
 type LocationTag {
@@ -252,6 +253,7 @@ type Query {
   replies: [Replies!]!
   currentAccount: Accounts!
   tagTypes: [TagType!]!
+  isFavoriting(input: String!): Boolean!
 }
 
 type Mutation {
@@ -270,6 +272,7 @@ type Mutation {
   login(loginInput: AuthInput!): LoginResponseDTO!
   register(registerInput: RegisterInput!): Accounts!
   favoriting(input: String!): Favorites!
+  unFavorite(input: String!): String!
 }
 
 input UpdateAccountInput {

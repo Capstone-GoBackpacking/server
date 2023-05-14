@@ -21,6 +21,22 @@ export class LocationsService {
     private readonly locationModel: typeof Locations,
   ) {}
 
+  async updateFavorite(locationId: string, num: number) {
+    const location = await this.locationModel.findByPk(locationId);
+    if (location) {
+      await this.locationModel.update(
+        {
+          favoriteNumber: location?.favoriteNumber + num,
+        },
+        {
+          where: { id: locationId },
+        },
+      );
+      return 'Update Success!';
+    }
+    return null;
+  }
+
   async findsTag(locationId: string) {
     return await this.locationModel
       .findOne({

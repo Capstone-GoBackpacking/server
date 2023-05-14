@@ -15,4 +15,28 @@ export class FavoritesService {
       accountId,
     });
   }
+
+  async unFavorite(accountId: string, locationId: string) {
+    await this.favoriteModel.destroy({
+      where: {
+        locationId,
+        accountId,
+      },
+    });
+    return 'UnFavorite Success!';
+  }
+
+  async isFavoriting(accountId: string, locationId: string): Promise<boolean> {
+    const favorite = await this.favoriteModel.findOne({
+      where: {
+        accountId,
+        locationId,
+      },
+    });
+    if (favorite) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
