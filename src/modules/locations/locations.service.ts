@@ -71,6 +71,28 @@ export class LocationsService {
     return await this.locationModel.findByPk(id);
   }
 
+  async deleteById(id: string) {
+    await this.locationModel.destroy({
+      where: {
+        id,
+      },
+    });
+    return 'Delete Success!';
+  }
+
+  async update(id: string, data: any) {
+    return await this.locationModel.update(
+      {
+        ...data,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+  }
+
   async create(body: ICreate): Promise<Locations> {
     const location = await this.locationModel.create({
       name: body.name,

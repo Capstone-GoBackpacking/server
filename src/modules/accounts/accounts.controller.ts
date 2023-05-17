@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ProfilesService } from 'modules/profiles/profiles.service';
 import { AccountsService } from './accounts.service';
 import { UpdateAccountInput } from './dto/update-account.input';
@@ -42,6 +50,18 @@ export class AccountsController {
   async byIdDelete(@Param() params: any) {
     await this.accountsService.deleteById(params.id);
     return 'Delete Success';
+  }
+
+  @Post()
+  async create(@Body() body: any) {
+    const { email, password, firstName, lastName, roleId, genderId } = body;
+    const account = await this.accountsService.createNew({
+      email,
+      password,
+      roleId,
+    });
+    await account.createProfile({ firstName, lastName, genderId });
+    return account;
   }
 
   @Put(':id')
