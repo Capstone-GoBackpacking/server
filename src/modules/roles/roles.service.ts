@@ -7,7 +7,11 @@ export class RolesService {
   constructor(
     @InjectModel(Roles)
     private readonly roleModel: typeof Roles,
-  ) { }
+  ) {}
+
+  async findById(id: string) {
+    return await this.roleModel.findByPk(id);
+  }
 
   async finds() {
     return await this.roleModel.findAll();

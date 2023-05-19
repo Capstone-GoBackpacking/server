@@ -53,6 +53,21 @@ export class AuthService {
     };
   }
 
+  async adminLogin(account: Accounts) {
+    const role = await this.rolesService.findById(account.roleId);
+    if (role?.name === 'admin') {
+      return {
+        access_token: this.jwtService.sign({
+          email: account.email,
+          sub: account.id,
+        }),
+        account: account.dataValues,
+      };
+    } else {
+      throw new HttpException('Permission denied', HttpStatus.FORBIDDEN);
+    }
+  }
+
   async register(input: ICreate) {
     const account = await this.accountsService.findOneByEmail(input.email);
 

@@ -9,6 +9,7 @@ import { AccountsModule } from 'modules/accounts/accounts.module';
 import { RequestJoinTripModule } from 'modules/request-join-trip/request-join-trip.module';
 import { PostsModule } from 'modules/posts/posts.module';
 import { TagHobbyModule } from 'modules/tag-hobby/tag-hobby.module';
+import { TripsController } from './trips.controller';
 
 @Module({
   imports: [
@@ -22,5 +23,6 @@ import { TagHobbyModule } from 'modules/tag-hobby/tag-hobby.module';
   ],
   providers: [TripsResolver, TripsService],
   exports: [TripsService],
+  controllers: [TripsController],
 })
 export class TripsModule {}
