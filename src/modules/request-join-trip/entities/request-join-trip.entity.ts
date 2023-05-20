@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   ForeignKey,
   DataType,
+  BelongsTo,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -26,10 +27,18 @@ export default class RequestJoinTrip extends Model {
   @Column
   tripId: string;
 
+  @Field(() => Trips)
+  @BelongsTo(() => Trips)
+  trip: Trips;
+
   @Field()
   @ForeignKey(() => Accounts)
   @Column
   memberId: string;
+
+  @Field(() => Accounts)
+  @BelongsTo(() => Accounts)
+  member: Accounts;
 
   @Field(() => Boolean)
   @Column({

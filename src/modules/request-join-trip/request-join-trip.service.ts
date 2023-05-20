@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import Trips from 'modules/trips/entities/trip.entity';
 import RequestJoinTrip from './entities/request-join-trip.entity';
 
 @Injectable()
@@ -18,6 +19,17 @@ export class RequestJoinTripService {
       },
     });
     return joined !== null;
+  }
+
+  async myRequest(hostId: string) {
+    return await this.requestJoinTripModel.findAll({
+      include: {
+        model: Trips,
+        where: {
+          hostId,
+        },
+      },
+    });
   }
 
   async finds(
@@ -53,5 +65,28 @@ export class RequestJoinTripService {
       tripId,
       memberId,
     });
+  }
+
+  async accept(id: string) {
+    await this.requestJoinTripModel.update(
+      {
+        verify: true,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+    return 'verify';
+  }
+
+  async denied(id: string) {
+    await this.requestJoinTripModel.destroy({
+      where: {
+        id,
+      },
+    });
+    return 'denied';
   }
 }

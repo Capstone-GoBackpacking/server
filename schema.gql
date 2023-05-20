@@ -70,7 +70,9 @@ type Posts {
 type RequestJoinTrip {
   id: ID!
   tripId: String!
+  trip: Trips!
   memberId: String!
+  member: Accounts!
   verify: Boolean!
 }
 
@@ -228,11 +230,13 @@ type Query {
   account(input: String!): Accounts!
   accounts: [Accounts!]!
   isHost(input: String!): Boolean!
+  searchTrips: [Trips!]!
   tripsOfHost(input: String!): [Trips!]!
   getTripById(id: String!): Trips!
   trips: [Trips!]!
   searchLocation(input: SearchLocationInput!): [Locations!]!
   getLocationById(id: String!): Locations!
+  directionFavorite(input: DirectionInput!): [Locations!]!
   locations: [Locations!]!
   types: [Types!]!
   profiles: [Profiles!]!
@@ -242,6 +246,7 @@ type Query {
   postsOfTrip(input: String!): [Posts!]!
   posts: [Posts!]!
   isJoined(input: String!): Boolean!
+  myRequest: [RequestJoinTrip!]!
   requestJoinTrips: [RequestJoinTrip!]!
   comments: [Comments!]!
   tagHobbies: [TagHobby!]!
@@ -262,6 +267,11 @@ input SearchLocationInput {
   tagIds: [String!]
 }
 
+input DirectionInput {
+  top: Int!
+  direction: String!
+}
+
 type Mutation {
   updateAccount(input: UpdateAccountInput!): Accounts!
   asignHobbies(input: AsignHobbiesInput!): Accounts!
@@ -273,6 +283,8 @@ type Mutation {
   voting(input: CreateVoteReviewInput!): VoteReview!
   createPost(input: CreatePostInput!): Posts!
   joinTrip(input: String!): RequestJoinTrip!
+  acceptJoin(input: String!): String!
+  deniedJoin(input: String!): String!
   createComment(input: CreateCommentInput!): Comments!
   createLocationImages(input: CreateLocationImageInput!): LocationImages!
   login(loginInput: AuthInput!): LoginResponseDTO!

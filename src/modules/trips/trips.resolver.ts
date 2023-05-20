@@ -49,6 +49,11 @@ export class TripsResolver {
     return id === trip?.hostId;
   }
 
+  @Query(() => [Trips])
+  async searchTrips() {
+    return null;
+  }
+
   @Mutation(() => [Trips])
   @UseGuards(JwtAuthGuard)
   async generateTemplate(

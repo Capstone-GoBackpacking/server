@@ -38,6 +38,13 @@ export class LocationsService {
     return null;
   }
 
+  async topFavorite(top: number, direction: 'asc' | 'desc') {
+    return await this.locationModel.findAll({
+      limit: top,
+      order: [['favoriteNumber', direction]],
+    });
+  }
+
   async search(options: any) {
     const { name = '', tagIds = [] } = options;
     return await this.locationModel.findAll({

@@ -16,7 +16,10 @@ import { ReviewsService } from 'modules/reviews/reviews.service';
 import Reviews from 'modules/reviews/entities/review.entity';
 import LocationImages from 'modules/location-images/entities/location-image.entity';
 import { LocationImagesService } from 'modules/location-images/location-images.service';
-import { SearchLocationInput } from './dto/search-location.input';
+import {
+  DirectionInput,
+  SearchLocationInput,
+} from './dto/search-location.input';
 
 @Resolver(() => Locations)
 export class LocationsResolver {
@@ -60,6 +63,14 @@ export class LocationsResolver {
   @Mutation(() => Locations)
   async createLocation(@Args('input') input: CreateLocationInput) {
     return await this.locationsService.create(input);
+  }
+
+  @Query(() => [Locations])
+  async directionFavorite(@Args('input') input: DirectionInput) {
+    return await this.locationsService.topFavorite(
+      input.top,
+      input.direction as 'asc' | 'desc',
+    );
   }
 
   @Query(() => [Locations])

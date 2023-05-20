@@ -4,6 +4,7 @@ import Trips from './entities/trip.entity';
 import { Op } from 'sequelize';
 import Accounts from 'modules/accounts/entities/account.entity';
 import { EDesign } from 'common/types/enums';
+import Locations from 'modules/locations/entities/location.entity';
 
 interface ICreate {
   name: string;
@@ -40,6 +41,28 @@ export class TripsService {
         include: { model: Accounts, as: 'joinedMember' },
       })
       .then((res) => res?.joinedMember);
+  }
+
+  async search(options: any) {
+    return await this.tripModel.findAll({
+      where: {
+        name: {
+          [Op.like]: `%${options.name}%`,
+        },
+      },
+      include: {
+        model: Locations,
+        where: {
+          [Op.or]: [
+            {
+              name: {
+                [Op.like]: `%${options.name}%`,
+              },
+            },
+          ],
+        },
+      },
+    });
   }
 
   async joinTrip(tripId: string, accountId: string) {
