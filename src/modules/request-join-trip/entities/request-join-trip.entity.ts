@@ -43,7 +43,7 @@ export default class RequestJoinTrip extends Model {
   @Field(() => Boolean)
   @Column({
     type: DataType.BOOLEAN,
-    defaultValue: true,
+    defaultValue: false,
   })
   verify: boolean;
 }

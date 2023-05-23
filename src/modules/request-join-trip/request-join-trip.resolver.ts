@@ -45,10 +45,15 @@ export class RequestJoinTripResolver {
   @UseGuards(JwtAuthGuard)
   async joinTrip(@Args('input') input: string, @Context() ctx: any) {
     const { id } = ctx.req.user;
-    if (await this.requestJoinTripService.isJoined(input, id)) {
-      throw new HttpException('You are joined', HttpStatus.FORBIDDEN);
+    const request = await this.requestJoinTripService.finds(input, id);
+    if (!request) {
+      if (await this.requestJoinTripService.isJoined(input, id)) {
+        throw new HttpException('You are joined', HttpStatus.FORBIDDEN);
+      }
+      return await this.requestJoinTripService.create(input, id);
+    } else {
+      throw new HttpException('You are sended request', HttpStatus.FORBIDDEN);
     }
-    return await this.requestJoinTripService.create(input, id);
   }
 
   @ResolveField('trip', () => Trips)
