@@ -18,7 +18,7 @@ export class ProfilesService {
   }
 
   async update(accountId: string, data: any) {
-    return await this.profileModel.update(
+    await this.profileModel.update(
       {
         ...data,
       },
@@ -28,6 +28,7 @@ export class ProfilesService {
         },
       },
     );
+    return 'Success';
   }
 
   async finds(): Promise<Profiles[]> {

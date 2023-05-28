@@ -32,3 +32,9 @@ export class JoinTripInput {
   @Field()
   accountId: string;
 }
+
+@InputType()
+export class MyTripInput {
+  @Field()
+  accountId: string;
+}

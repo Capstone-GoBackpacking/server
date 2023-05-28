@@ -9,7 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { TripsService } from './trips.service';
 import Trips from './entities/trip.entity';
-import { CreateTripInput } from './dto/create-trip.input';
+import { CreateTripInput, MyTripInput } from './dto/create-trip.input';
 import { LocationsService } from 'modules/locations/locations.service';
 import Locations from 'modules/locations/entities/location.entity';
 import Types from 'modules/types/entities/type.entity';
@@ -37,6 +37,16 @@ export class TripsResolver {
     private readonly postsService: PostsService,
     private readonly tagHobbyService: TagHobbyService,
   ) {}
+
+  @Query(() => [Trips])
+  async myTrip(@Args('input') input: MyTripInput) {
+    const mytrip = await this.tripsService.findsByHost(input.accountId);
+    const joinedTrips = await this.requestJoinTripService.findsByMember(
+      input.accountId,
+      true,
+    );
+    return [...mytrip, ...joinedTrips];
+  }
 
   @Query(() => Boolean)
   @UseGuards(JwtAuthGuard)

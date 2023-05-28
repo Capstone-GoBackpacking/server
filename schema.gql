@@ -229,6 +229,7 @@ type Query {
   getAccountById(input: String!): Accounts!
   account(input: String!): Accounts!
   accounts: [Accounts!]!
+  myTrip(input: MyTripInput!): [Trips!]!
   isHost(input: String!): Boolean!
   searchTrips: [Trips!]!
   tripsOfHost(input: String!): [Trips!]!
@@ -262,6 +263,10 @@ type Query {
   isFavoriting(input: String!): Boolean!
 }
 
+input MyTripInput {
+  accountId: String!
+}
+
 input SearchLocationInput {
   name: String
   tagIds: [String!]
@@ -278,6 +283,7 @@ type Mutation {
   generateTemplate(input: GenerateTemplateInput!): [Trips!]!
   createTrip(input: CreateTripInput!): Trips!
   createLocation(input: CreateLocationInput!): Locations!
+  updateProfile(input: UpdateProfileInput!): String!
   createReview(input: CreateReviewInput!): Reviews!
   unVoting(id: String!): String!
   voting(input: CreateVoteReviewInput!): VoteReview!
@@ -337,6 +343,16 @@ input CreateLocationInput {
   lng: String!
   lat: String!
   tags: [String!]!
+}
+
+input UpdateProfileInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  firstName: String
+  lastName: String
+  birthday: String
+  avatar: String
+  genderId: String
 }
 
 input CreateReviewInput {

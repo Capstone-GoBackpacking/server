@@ -21,6 +21,20 @@ export class RequestJoinTripService {
     return joined !== null;
   }
 
+  async findsByMember(memberId: string, verify: boolean) {
+    return (
+      await this.requestJoinTripModel.findAll({
+        where: {
+          memberId,
+          verify,
+        },
+        include: {
+          model: Trips,
+        },
+      })
+    ).map((item) => item.trip);
+  }
+
   async myRequest(hostId: string) {
     return await this.requestJoinTripModel.findAll({
       include: {
