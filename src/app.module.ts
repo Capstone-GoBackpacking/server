@@ -28,6 +28,7 @@ import { VoteReviewModule } from './modules/vote-review/vote-review.module';
 import { TagHobbyModule } from './modules/tag-hobby/tag-hobby.module';
 import { TagTypeModule } from './modules/tag-type/tag-type.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
+import { PostImagesModule } from './modules/post-images/post-images.module';
 import SequelizeConfig from './configs/sequelize.config';
 
 @Module({
@@ -63,6 +64,7 @@ import SequelizeConfig from './configs/sequelize.config';
     TagHobbyModule,
     TagTypeModule,
     FavoritesModule,
+    PostImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

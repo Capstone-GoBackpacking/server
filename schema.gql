@@ -49,6 +49,13 @@ type Comments {
   replies: [Replies!]!
 }
 
+type PostImages {
+  id: ID!
+  url: String!
+  time: String!
+  postId: String!
+}
+
 type PostTag {
   id: ID!
   tagId: String!
@@ -63,6 +70,7 @@ type Posts {
   author: Accounts!
   tags: [Tags!]!
   comments: [Comments!]!
+  images: [PostImages!]!
   tripId: String!
   trip: Trips!
 }
@@ -132,6 +140,7 @@ type Reviews {
   locationId: String!
   location: Locations!
   voteReviews: [VoteReview!]!
+  time: String!
   targetVoted: String!
 }
 
@@ -368,6 +377,7 @@ input CreateVoteReviewInput {
 input CreatePostInput {
   content: String!
   tripId: String!
+  images: [String!]
 }
 
 input CreateCommentInput {

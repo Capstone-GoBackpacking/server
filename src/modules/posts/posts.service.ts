@@ -29,13 +29,20 @@ export class PostsService {
     });
   }
 
-  async create({ content, authorId, tripId }: { [key: string]: string }) {
-    return await this.postModel.create({
+  async create({
+    content,
+    authorId,
+    tripId,
+  }: {
+    [key: string]: string | string[];
+  }) {
+    const record = await this.postModel.create({
       content,
       authorId,
       tripId,
       time: Date.now(),
     });
+    return record;
   }
 
   async finds(): Promise<Posts[]> {

@@ -11,6 +11,7 @@ import {
   ForeignKey,
   BelongsTo,
   HasMany,
+  AllowNull,
 } from 'sequelize-typescript';
 
 @ObjectType()
@@ -51,4 +52,12 @@ export default class Reviews extends Model {
   @Field(() => [VoteReview])
   @HasMany(() => VoteReview)
   voteReviews: VoteReview[];
+
+  @Field()
+  @AllowNull(false)
+  @Column({
+    type: DataType.DATE,
+    defaultValue: DataType.NOW,
+  })
+  time: string;
 }

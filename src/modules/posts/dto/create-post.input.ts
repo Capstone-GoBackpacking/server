@@ -6,4 +6,6 @@ export class CreatePostInput {
   content: string;
   @Field()
   tripId: string;
+  @Field(() => [String], { nullable: true })
+  images?: string[];
 }

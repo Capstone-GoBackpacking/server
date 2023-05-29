@@ -18,6 +18,8 @@ import Trips from 'modules/trips/entities/trip.entity';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Comments from 'modules/comments/entities/comment.entity';
 import { CommentsService } from 'modules/comments/comments.service';
+import { PostImagesService } from 'modules/post-images/post-images.service';
+import PostImages from 'modules/post-images/entities/post-image.entity';
 
 @Resolver(() => Posts)
 export class PostsResolver {
@@ -26,11 +28,17 @@ export class PostsResolver {
     private readonly tripsService: TripsService,
     private readonly accountsService: AccountsService,
     private readonly commentsService: CommentsService,
+    private readonly postImagesService: PostImagesService,
   ) {}
 
   @ResolveField('comments', () => [Comments])
   async getComments(@Parent() post: Posts) {
     return await this.commentsService.findsByPost(post.id);
+  }
+
+  @ResolveField('images', () => [PostImages])
+  async getImages(@Parent() post: Posts) {
+    return await this.postImagesService.getByPost(post.id);
   }
 
   @Query(() => [Posts])
@@ -52,7 +60,18 @@ export class PostsResolver {
   @UseGuards(JwtAuthGuard)
   async createPost(@Args('input') input: CreatePostInput, @Context() ctx: any) {
     const { id } = ctx.req.user;
-    return await this.postsService.create({ ...input, authorId: id });
+    const post = await this.postsService.create({ ...input, authorId: id });
+    if (Array.isArray(input.images) && input.images.length > 0) {
+      await Promise.all(
+        input.images.map(async (image) => {
+          await this.postImagesService.create({
+            postId: post.id,
+            url: image,
+          });
+        }),
+      );
+    }
+    return post;
   }
 
   @Query(() => [Posts])

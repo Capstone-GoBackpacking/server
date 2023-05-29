@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import Accounts from 'modules/accounts/entities/account.entity';
 import Comments from 'modules/comments/entities/comment.entity';
+import PostImages from 'modules/post-images/entities/post-image.entity';
 import PostTag from 'modules/post-tag/entities/post-tag.entity';
 import Tags from 'modules/tags/entities/tag.entity';
 import Trips from 'modules/trips/entities/trip.entity';
@@ -60,6 +61,10 @@ export default class Posts extends Model {
   @Field(() => [Comments])
   @HasMany(() => Comments)
   comments: Comments[];
+
+  @Field(() => PostImages)
+  @HasMany(() => PostImages)
+  images: PostImages[];
 
   @Field()
   @AllowNull(false)
