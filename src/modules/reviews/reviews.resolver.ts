@@ -18,6 +18,8 @@ import Locations from 'modules/locations/entities/location.entity';
 import { LocationsService } from 'modules/locations/locations.service';
 import { VoteReviewService } from 'modules/vote-review/vote-review.service';
 import VoteReview from 'modules/vote-review/entities/vote-review.entity';
+import { TripsService } from 'modules/trips/trips.service';
+import { RequestJoinTripService } from 'modules/request-join-trip/request-join-trip.service';
 
 @Resolver(() => Reviews)
 export class ReviewsResolver {
@@ -26,7 +28,31 @@ export class ReviewsResolver {
     private readonly accountsService: AccountsService,
     private readonly locationsService: LocationsService,
     private readonly voteReviewService: VoteReviewService,
+    private readonly tripsService: TripsService,
+    private readonly requestJoinTripService: RequestJoinTripService,
   ) {}
+
+  @Query(() => Boolean)
+  @UseGuards(JwtAuthGuard)
+  async permissionReview(@Args('input') input: string, @Context() ctx: any) {
+    const { id } = ctx.req.user;
+    const myTrips = await this.tripsService.findsByHost(id);
+    const myJoinedTrips = await this.requestJoinTripService.findsByMember(
+      id,
+      true,
+    );
+    const trips = [...myTrips, ...myJoinedTrips];
+    for (const trip of trips) {
+      console.log(input, trip.locationStartId, trip.locationEndId);
+      if (
+        (trip.locationEndId === input || trip.locationStartId === input) &&
+        new Date(trip.timeEnd).getTime() < new Date().getTime()
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   @ResolveField('targetVoted', () => String)
   @UseGuards(JwtAuthGuard)

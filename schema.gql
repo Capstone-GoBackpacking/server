@@ -250,6 +250,7 @@ type Query {
   locations: [Locations!]!
   types: [Types!]!
   profiles: [Profiles!]!
+  permissionReview(input: String!): Boolean!
   reviewsOfLocation(locationId: String!): [Reviews!]!
   reviews: [Reviews!]!
   voteReviews: [VoteReview!]!
