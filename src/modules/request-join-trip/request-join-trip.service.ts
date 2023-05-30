@@ -35,6 +35,15 @@ export class RequestJoinTripService {
     ).map((item) => item.trip);
   }
 
+  async findsByTrip(tripId: string, verify: boolean) {
+    return await this.requestJoinTripModel.findAll({
+      where: {
+        tripId,
+        verify,
+      },
+    });
+  }
+
   async myRequest(hostId: string) {
     return await this.requestJoinTripModel.findAll({
       include: {

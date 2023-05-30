@@ -38,7 +38,10 @@ export class TripsService {
         where: {
           id: tripId,
         },
-        include: { model: Accounts, as: 'joinedMember' },
+        include: {
+          model: Accounts,
+          as: 'joinedMember',
+        },
       })
       .then((res) => res?.joinedMember);
   }

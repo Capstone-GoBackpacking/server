@@ -50,7 +50,15 @@ export class RequestJoinTripResolver {
       if (await this.requestJoinTripService.isJoined(input, id)) {
         throw new HttpException('You are joined', HttpStatus.FORBIDDEN);
       }
-      return await this.requestJoinTripService.create(input, id);
+      const tripSlot = (await this.tripsService.findById(input))?.slot;
+      const joined = (
+        await this.requestJoinTripService.findsByTrip(input, true)
+      ).length;
+      if (tripSlot && joined < tripSlot) {
+        return await this.requestJoinTripService.create(input, id);
+      } else {
+        throw new HttpException('Trip is full', HttpStatus.FORBIDDEN);
+      }
     } else {
       throw new HttpException('You are sended request', HttpStatus.FORBIDDEN);
     }

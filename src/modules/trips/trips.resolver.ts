@@ -179,7 +179,21 @@ export class TripsResolver {
 
   @ResolveField('joinedMember', () => [Accounts])
   async getJoinedMember(@Parent() trip: Trips) {
-    return await this.tripsService.findsJoinedMember(trip.id);
+    const record = await this.tripsService.findsJoinedMember(trip.id);
+    let verifys: any[] = [];
+    if (record) {
+      verifys = await Promise.all(
+        record?.map(async (account: any) => {
+          return await this.requestJoinTripService.finds(trip.id, account.id);
+        }),
+      );
+    }
+    const filter = verifys.filter((verify) => verify.verify);
+    return await Promise.all(
+      filter.map(async (item: any) => {
+        return await this.accountsService.findById(item.memberId);
+      }),
+    );
   }
 
   @ResolveField('host', () => Accounts)
