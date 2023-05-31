@@ -144,7 +144,7 @@ export class TripsResolver {
           name: tripName,
           timeStart,
           timeEnd,
-          slot: 1,
+          slot: 5,
           locationEndId,
           locationStartId: location.id,
           hostId: id,
