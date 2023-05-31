@@ -88,9 +88,10 @@ export class LocationsService {
   }
 
   async update(id: string, data: any) {
-    return await this.locationModel.update(
+    const { tags, ...remain } = data;
+    await this.locationModel.update(
       {
-        ...data,
+        ...remain,
       },
       {
         where: {
@@ -98,6 +99,11 @@ export class LocationsService {
         },
       },
     );
+    if (tags.length > 0) {
+      const record = await this.locationModel.findByPk(id);
+      record?.addTags(tags);
+    }
+    return 'Success';
   }
 
   async create(body: ICreate): Promise<Locations> {

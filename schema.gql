@@ -319,6 +319,7 @@ input UpdateAccountInput {
   birthday: String
   address: String
   avatar: String
+  roleId: String
 }
 
 input AsignHobbiesInput {

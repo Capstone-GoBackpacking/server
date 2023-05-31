@@ -66,12 +66,21 @@ export class AccountsController {
 
   @Put(':id')
   async byIdUpdate(@Param() params: any, @Body() body: UpdateAccountInput) {
-    const { email, password, address, avatar, firstName, lastName, birthday } =
-      body;
+    const {
+      email,
+      password,
+      address,
+      avatar,
+      firstName,
+      lastName,
+      birthday,
+      roleId,
+    } = body;
     if (email || password) {
       await this.accountsService.update(params.id, {
         ...(email && { email }),
         ...(password && { password }),
+        ...(roleId && { roleId }),
       });
     }
     if (address || avatar || firstName || lastName || birthday) {

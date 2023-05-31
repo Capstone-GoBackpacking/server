@@ -17,6 +17,8 @@ export class UpdateAccountInput extends PartialType(CreateAccountInput) {
   address?: string;
   @Field({ nullable: true })
   avatar?: string;
+  @Field({ nullable: true })
+  roleId?: string;
 }
 
 @InputType()
