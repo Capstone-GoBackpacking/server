@@ -3,6 +3,7 @@ import AccountHobby from 'modules/account-hobby/entities/account-hobby.entity';
 import Accounts from 'modules/accounts/entities/account.entity';
 import TagHobby from 'modules/tag-hobby/entities/tag-hobby.entity';
 import Tags from 'modules/tags/entities/tag.entity';
+import { HasManyAddAssociationsMixin } from 'sequelize';
 import {
   Table,
   Model,
@@ -38,4 +39,6 @@ export default class Hobbies extends Model {
   @Field(() => [Tags])
   @BelongsToMany(() => Tags, () => TagHobby)
   tags: Tags[];
+
+  addTags: HasManyAddAssociationsMixin<Tags, string>;
 }

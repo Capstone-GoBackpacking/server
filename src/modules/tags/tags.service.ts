@@ -11,6 +11,35 @@ export class TagsService {
     private readonly tagModel: typeof Tags,
   ) {}
 
+  async deleteById(id: string) {
+    await this.tagModel.destroy({
+      where: {
+        id,
+      },
+    });
+    return 'Delete Success!';
+  }
+
+  async update(id: string, data: any) {
+    return await this.tagModel.update(
+      {
+        ...data,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+  }
+
+  async create(body: { name: string }) {
+    const record = await this.tagModel.create({
+      name: body.name,
+    });
+    return record;
+  }
+
   async findTypes(tagId: string) {
     return await this.tagModel
       .findOne({

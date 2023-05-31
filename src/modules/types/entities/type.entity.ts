@@ -2,6 +2,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import TagType from 'modules/tag-type/entities/tag-type.entity';
 import Tags from 'modules/tags/entities/tag.entity';
 import Trips from 'modules/trips/entities/trip.entity';
+import { HasManyAddAssociationsMixin } from 'sequelize';
 import {
   Table,
   Model,
@@ -46,4 +47,6 @@ export default class Types extends Model {
   @Field(() => [Tags])
   @BelongsToMany(() => Tags, () => TagType)
   tags: Tags[];
+
+  addTags: HasManyAddAssociationsMixin<Tags, string>;
 }

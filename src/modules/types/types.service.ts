@@ -10,6 +10,43 @@ export class TypesService {
     private readonly typeModel: typeof Types,
   ) {}
 
+  async deleteById(id: string) {
+    await this.typeModel.destroy({
+      where: {
+        id,
+      },
+    });
+    return 'Delete Success!';
+  }
+
+  async update(id: string, data: any) {
+    const { relations, ...remain } = data;
+    const target = await this.typeModel.findByPk(id);
+    if (relations.length > 0) {
+      await target?.addTags(relations);
+    }
+    return await this.typeModel.update(
+      {
+        ...remain,
+      },
+      {
+        where: {
+          id,
+        },
+      },
+    );
+  }
+
+  async create(body: { name: string; relations: string[] }) {
+    const record = await this.typeModel.create({
+      name: body.name,
+    });
+    if (body.relations.length > 0) {
+      await record.addTags(body.relations);
+    }
+    return record;
+  }
+
   async findTags(typeId: string) {
     return await this.typeModel
       .findOne({
@@ -29,6 +66,11 @@ export class TypesService {
   }
 
   async finds(): Promise<Types[]> {
-    return await this.typeModel.findAll();
+    return await this.typeModel.findAll({
+      include: {
+        model: Tags,
+        as: 'tags',
+      },
+    });
   }
 }
