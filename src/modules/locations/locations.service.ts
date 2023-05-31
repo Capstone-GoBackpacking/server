@@ -120,6 +120,10 @@ export class LocationsService {
       where: {
         status: EStatus.enable,
       },
+      include: {
+        model: Tags,
+        as: 'tags',
+      },
     });
   }
 }
